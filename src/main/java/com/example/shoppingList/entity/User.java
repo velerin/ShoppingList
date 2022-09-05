@@ -1,6 +1,7 @@
 package com.example.shoppingList.entity;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "user")
@@ -20,18 +21,20 @@ public class User {
     @Column(name="email")
     private String email;
 
-    @Column(name ="list_id")
-    private int listId;
+    @OneToMany(fetch = FetchType.LAZY,cascade = {CascadeType.PERSIST,CascadeType.MERGE,
+            CascadeType.REFRESH,CascadeType.DETACH })
+    @JoinColumn(name = "list_id")
+    private List<ProductList> productLists;
 
     public User() {
     }
 
-    public User(int id, String firstName, String lastName, String email, int listId) {
+    public User(int id, String firstName, String lastName, String email, List<ProductList> productLists) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
-        this.listId = listId;
+        this.productLists = productLists;
     }
 
     public int getId() {
@@ -66,14 +69,6 @@ public class User {
         this.email = email;
     }
 
-    public int getListId() {
-        return listId;
-    }
-
-    public void setListId(int listId) {
-        this.listId = listId;
-    }
-
     @Override
     public String toString() {
         return "User{" +
@@ -81,7 +76,7 @@ public class User {
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", email='" + email + '\'' +
-                ", listId=" + listId +
+                ", productLists=" + productLists +
                 '}';
     }
 }
