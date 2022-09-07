@@ -2,6 +2,7 @@ package com.example.shoppingList.controller;
 
 import com.example.shoppingList.dao.UserRepository;
 import com.example.shoppingList.entity.User;
+import com.example.shoppingList.model.UserModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.stereotype.Controller;
@@ -30,33 +31,33 @@ public class RegistrationController {
     @GetMapping("/showRegistrationForm")
     public String showMyLoginPage(Model theModel) {
 
-        theModel.addAttribute("crmUser", new CrmUser());
+        theModel.addAttribute("UserModel", new UserModel());
 
         return "registration-form";
     }
 
     @PostMapping("/processRegistrationForm")
     public String processRegistrationForm(
-            @Valid @ModelAttribute("crmUser") CrmUser theCrmUser,
+            @Valid @ModelAttribute("UserModel") UserModel userModel,
             BindingResult theBindingResult,
             Model theModel) {
-
-        String userName = theCrmUser.getUserName();
 
         if (theBindingResult.hasErrors()){
             return "registration-form";
         }
 
+        String userName = userModel.getUserName();
+
         User existing = userRepository.findByUserName(userName);
         if (existing != null){
-            theModel.addAttribute("crmUser", new CrmUser());
+            theModel.addAttribute("userModel", new UserModel());
             theModel.addAttribute("registrationError", "User name already exists.");
 
             return "registration-form";
         }
 
         // create user account
-        userRepository.save(theCrmUser);
+        userRepository.save(userModel);
 
         return "registration-confirmation";
     }
