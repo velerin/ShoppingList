@@ -1,11 +1,12 @@
 package com.example.shoppingList.entity;
 
 import javax.persistence.*;
+import java.util.Collection;
 import java.util.List;
 
 @Entity
 @Table(name = "user")
-public class UserForList {
+public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,18 +19,27 @@ public class UserForList {
     @Column(name="last_name")
     private String lastName;
 
-    @Column(name="email")
+    @Column(name="email",unique = true)
     private String email;
+
+    @Column
+    private String password;
+
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinTable(name = "users_roles",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private Collection<Role> roles;
 
     @OneToMany(fetch = FetchType.LAZY,cascade = {CascadeType.PERSIST,CascadeType.MERGE,
             CascadeType.REFRESH,CascadeType.DETACH })
     @JoinColumn(name = "list_id")
     private List<ProductList> productLists;
 
-    public UserForList() {
+    public User() {
     }
 
-    public UserForList(int id, String firstName, String lastName, String email, List<ProductList> productLists) {
+    public User(int id, String firstName, String lastName, String email, List<ProductList> productLists) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;

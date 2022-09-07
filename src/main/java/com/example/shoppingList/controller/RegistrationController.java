@@ -1,5 +1,7 @@
 package com.example.shoppingList.controller;
 
+import com.example.shoppingList.dao.UserRepository;
+import com.example.shoppingList.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.stereotype.Controller;
@@ -15,7 +17,7 @@ import javax.validation.Valid;
 public class RegistrationController {
 
     @Autowired
-    private UserService userService;
+    private UserRepository userRepository;
 
     @InitBinder
     public void initBinder(WebDataBinder dataBinder) {
@@ -45,7 +47,7 @@ public class RegistrationController {
             return "registration-form";
         }
 
-        User existing = userService.findByUserName(userName);
+        User existing = userRepository.findByUserName(userName);
         if (existing != null){
             theModel.addAttribute("crmUser", new CrmUser());
             theModel.addAttribute("registrationError", "User name already exists.");
@@ -54,7 +56,7 @@ public class RegistrationController {
         }
 
         // create user account
-        userService.save(theCrmUser);
+        userRepository.save(theCrmUser);
 
         return "registration-confirmation";
     }
