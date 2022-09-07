@@ -47,4 +47,9 @@ public class UserServiceImpl implements UserService{
     public boolean checkIfUserExist(String email) {
         return userRepository.findByEmail(email) != null;
     }
+
+    @Override
+    public User findByUserName(String userName) {
+        return userRepository.findByUserName(userName);
+    }
 }
