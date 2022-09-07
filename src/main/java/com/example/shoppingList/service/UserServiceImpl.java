@@ -34,7 +34,7 @@ public class UserServiceImpl implements UserService{
         }
         Role role = roleRepository.findByName("ROLE_EMPLOYEE");
         role.setId(0);
-        User user = new User(0, userModel.getFirstName(), userModel.getLastName(), userModel.getEmail(),
+        User user = new User(0, userModel.getFirstName(), userModel.getLastName(), userModel.getEmail(),userModel.getUserName(),
                 passwordEncoder.encode( userModel.getPassword()),Collections.singletonList(role));
         userRepository.save(user);
 
