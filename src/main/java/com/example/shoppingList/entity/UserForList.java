@@ -5,7 +5,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "user")
-public class User {
+public class UserForList {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,10 +26,10 @@ public class User {
     @JoinColumn(name = "list_id")
     private List<ProductList> productLists;
 
-    public User() {
+    public UserForList() {
     }
 
-    public User(int id, String firstName, String lastName, String email, List<ProductList> productLists) {
+    public UserForList(int id, String firstName, String lastName, String email, List<ProductList> productLists) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
