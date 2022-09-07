@@ -39,12 +39,14 @@ public class User {
     public User() {
     }
 
-    public User(int id, String firstName, String lastName, String email, List<ProductList> productLists) {
+    public User(int id, String firstName, String lastName, String email, String password, Collection<Role> roles) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
-        this.productLists = productLists;
+        this.password = password;
+        this.roles = roles;
+        this.productLists = null;
     }
 
     public int getId() {
