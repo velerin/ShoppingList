@@ -1,6 +1,7 @@
 package com.example.shoppingList.entity;
 
 import javax.persistence.*;
+import java.util.LinkedList;
 import java.util.List;
 
 @Entity
@@ -13,24 +14,21 @@ public class ProductList {
     private int id;
 
     @Column(name = "title",nullable = false)
-    private String title;
+    private String title = "Default list for new user";
 
     @OneToMany(fetch = FetchType.LAZY,cascade = {CascadeType.PERSIST,CascadeType.MERGE,
             CascadeType.REFRESH,CascadeType.DETACH })
-    @JoinColumn(name = "product_id",nullable = false)
+    @JoinColumn(name = "product_id")
     private List<Product> products;
 
     @ManyToOne(cascade = {CascadeType.PERSIST,CascadeType.MERGE,
-            CascadeType.REFRESH,CascadeType.DETACH },optional = false)
+            CascadeType.REFRESH,CascadeType.DETACH })
     private User user;
 
     public ProductList() {
     }
-
-    public ProductList(int id, String title, List<Product> products) {
-        this.id = id;
+    public ProductList(String title) {
         this.title = title;
-        this.products = products;
     }
 
     public int getId() {
@@ -56,4 +54,21 @@ public class ProductList {
     public void setProducts(List<Product> products) {
         this.products = products;
     }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public void addProduct(Product product){
+        if(this.products==null){
+            this.products = new LinkedList<>();
+        }
+
+        this.products.add(product);
+    }
+
 }

@@ -8,7 +8,7 @@ CREATE TABLE users (
    first_name VARCHAR(255) NOT NULL,
    last_name VARCHAR(255) NOT NULL,
    email VARCHAR(255) NOT NULL,
-   user_name VARCHAR(255) NOT NULL,
+   username VARCHAR(255) NOT NULL,
    password VARCHAR(255) NOT NULL,
    enabled BIT(1) NOT NULL,
    CONSTRAINT pk_users PRIMARY KEY (id)
@@ -16,9 +16,7 @@ CREATE TABLE users (
 
 ALTER TABLE users ADD CONSTRAINT uc_users_email UNIQUE (email);
 
-ALTER TABLE users ADD CONSTRAINT uc_users_username UNIQUE (user_name);
-
-ALTER TABLE users ADD CONSTRAINT uc_users_email UNIQUE (email);
+ALTER TABLE users ADD CONSTRAINT uc_users_username UNIQUE (username);
 
 INSERT INTO `users` (username,password,first_name,last_name,email,enabled)
 VALUES
@@ -41,7 +39,7 @@ VALUES
 CREATE TABLE lists (
   id INT AUTO_INCREMENT NOT NULL,
    title VARCHAR(255) NOT NULL,
-   user_id INT NOT NULL,
+   user_id INT NULL,
    CONSTRAINT pk_lists PRIMARY KEY (id)
 );
 
@@ -53,7 +51,7 @@ CREATE TABLE products (
   id INT AUTO_INCREMENT NOT NULL,
    amount INT NOT NULL,
    product_name VARCHAR(255) NOT NULL,
-   product_id INT NOT NULL,
+   product_id INT NULL,
    CONSTRAINT pk_products PRIMARY KEY (id)
 );
 

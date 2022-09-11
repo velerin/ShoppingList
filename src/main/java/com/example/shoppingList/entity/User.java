@@ -2,6 +2,8 @@ package com.example.shoppingList.entity;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 
 @Entity
@@ -10,41 +12,41 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="id")
+    @Column(name = "id")
     private int id;
 
-    @Column(name="first_name",nullable = false)
+    @Column(name = "first_name", nullable = false)
     private String firstName;
 
-    @Column(name="last_name",nullable = false)
+    @Column(name = "last_name", nullable = false)
     private String lastName;
 
-    @Column(name="email",unique = true,nullable = false)
+    @Column(name = "email", unique = true, nullable = false)
     private String email;
 
-    @Column(name = "userName",unique = true,nullable = false)
+    @Column(name = "username", unique = true, nullable = false)
     private String userName;
 
-    @Column(name = "password",nullable = false)
+    @Column(name = "password", nullable = false)
     private String password;
 
-    @Column(name="enabled",nullable = false)
+    @Column(name = "enabled", nullable = false)
     private boolean enabled;
 
-    @OneToMany(cascade = {CascadeType.PERSIST,CascadeType.MERGE,
-            CascadeType.REFRESH,CascadeType.DETACH })
+    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE,
+            CascadeType.REFRESH, CascadeType.DETACH})
     @JoinColumn(name = "user_id")
     private Collection<Authorities> authorities;
 
-    @OneToMany(fetch = FetchType.LAZY,cascade = {CascadeType.PERSIST,CascadeType.MERGE,
-            CascadeType.REFRESH,CascadeType.DETACH })
+    @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE,
+            CascadeType.REFRESH, CascadeType.DETACH})
     @JoinColumn(name = "user_id")
     private List<ProductList> productLists;
 
     public User() {
     }
 
-    public User(int id, String firstName, String lastName, String email, String userName, String password,boolean enabled, Collection<Authorities> authorities) {
+    public User(int id, String firstName, String lastName, String email, String userName, String password, boolean enabled, Collection<Authorities> authorities) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -53,7 +55,7 @@ public class User {
         this.password = password;
         this.enabled = enabled;
         this.authorities = authorities;
-        this.productLists = null;
+        this.productLists = Collections.singletonList(new ProductList());
     }
 
     public String getUserName() {
@@ -126,6 +128,15 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public void addProductList(ProductList list){
+        if(this.productLists==null){
+            this.productLists = new LinkedList<>();
+        }
+
+        this.productLists.add(list);
+        list.setUser(this);
     }
 
     @Override

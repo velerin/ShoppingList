@@ -3,6 +3,8 @@ package com.example.shoppingList.service;
 import com.example.shoppingList.dao.AuthorityRepository;
 import com.example.shoppingList.dao.UserRepository;
 import com.example.shoppingList.entity.Authorities;
+import com.example.shoppingList.entity.Product;
+import com.example.shoppingList.entity.ProductList;
 import com.example.shoppingList.entity.User;
 import com.example.shoppingList.model.UserModel;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +38,15 @@ public class UserServiceImpl implements UserService{
         authorities.setId(0);
         User user = new User(0, userModel.getFirstName(), userModel.getLastName(), userModel.getEmail(),userModel.getUserName(),
                 passwordEncoder.encode( userModel.getPassword()),true,Collections.singletonList(authorities));
+
+        ProductList list = new ProductList();
+
+        user.setProductLists(Collections.singletonList(list));
+
+        list.addProduct(new Product());
+
         System.out.println(user);
+
         userRepository.save(user);
 
     }

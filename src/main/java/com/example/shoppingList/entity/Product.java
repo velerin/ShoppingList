@@ -12,16 +12,15 @@ public class Product {
     private int id;
 
     @Column(name = "amount",nullable = false)
-    private int amount;
+    private int amount = 1;
 
     @Column(name = "product_name",nullable = false)
-    private String productName;
+    private String productName = "Default product for new user";
 
     public Product() {
     }
 
-    public Product(int id, int amount, String productName) {
-        this.id = id;
+    public Product( String productName,int amount) {
         this.amount = amount;
         this.productName = productName;
     }
