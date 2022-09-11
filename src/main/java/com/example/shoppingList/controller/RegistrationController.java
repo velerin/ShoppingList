@@ -31,14 +31,14 @@ public class RegistrationController {
     @GetMapping("/showRegistrationForm")
     public String showMyLoginPage(Model theModel) {
 
-        theModel.addAttribute("UserModel", new UserModel());
+        theModel.addAttribute("userModel", new UserModel());
 
         return "registration-form";
     }
 
     @PostMapping("/processRegistrationForm")
     public String processRegistrationForm(
-            @Valid @ModelAttribute("UserModel") UserModel userModel,
+            @Valid @ModelAttribute("userModel") UserModel userModel,
             BindingResult theBindingResult,
             Model theModel) {
 
