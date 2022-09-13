@@ -1,6 +1,5 @@
 package com.example.shoppingList.config;
 
-import com.example.shoppingList.constants.Roles;
 import com.example.shoppingList.dao.AuthorityRepository;
 import com.example.shoppingList.entity.Authority;
 import com.example.shoppingList.entity.User;
@@ -41,20 +40,6 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
 
 		HttpSession session = request.getSession();
 		session.setAttribute("user", user);
-
-
-		if(authorities.contains(new Authority(Roles.ADMIN.value, userName,user))){
-			response.sendRedirect(request.getContextPath() + "/admins");
-			return;
-		}
-		if(authorities.contains(new Authority(Roles.MANAGER.value, userName,user))){
-			response.sendRedirect(request.getContextPath() + "/leaders");
-			return;
-		}
-		if(authorities.contains(new Authority(Roles.USER.value, userName,user))){
-			response.sendRedirect(request.getContextPath() + "/user");
-			return;
-		}
 
 		response.sendRedirect(request.getContextPath() + "/");
 	}
