@@ -1,8 +1,8 @@
 package com.example.shoppingList.service;
 
-import com.example.shoppingList.dao.RoleRepository;
+import com.example.shoppingList.dao.AuthorityRepository;
 import com.example.shoppingList.dao.UserRepository;
-import com.example.shoppingList.entity.Role;
+import com.example.shoppingList.entity.Authorities;
 import com.example.shoppingList.entity.User;
 import com.example.shoppingList.model.UserModel;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +22,7 @@ public class UserServiceImpl implements UserService{
     private UserRepository userRepository;
 
     @Autowired
-    private RoleRepository roleRepository;
+    private AuthorityRepository authorityRepository;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -32,15 +32,16 @@ public class UserServiceImpl implements UserService{
         if(checkIfUserExist(userModel.getEmail())){
             throw new UserAlreadyExistException("User already exists for this email");
         }
-        Role role = roleRepository.findByName("ROLE_EMPLOYEE");
-        role.setId(0);
+        Authorities authorities = new Authorities(userModel.getUserName(), "ROLE_USER");
+        authorities.setId(0);
         User user = new User(0, userModel.getFirstName(), userModel.getLastName(), userModel.getEmail(),userModel.getUserName(),
-                passwordEncoder.encode( userModel.getPassword()),Collections.singletonList(role));
+                passwordEncoder.encode( userModel.getPassword()),true,Collections.singletonList(authorities));
+        System.out.println(user);
         userRepository.save(user);
 
     }
-    private Collection<? extends GrantedAuthority> mapRolesToAuthorities(Collection<Role> roles) {
-        return roles.stream().map(role -> new SimpleGrantedAuthority(role.getName())).collect(Collectors.toList());
+    private Collection<? extends GrantedAuthority> mapRolesToAuthorities(Collection<Authorities> authorities) {
+        return authorities.stream().map(authority -> new SimpleGrantedAuthority(authority.getUserName())).collect(Collectors.toList());
     }
 
     @Override

@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(name="list")
+@Table(name="lists")
 public class ProductList {
 
     @Id
@@ -12,13 +12,17 @@ public class ProductList {
     @Column(name = "id")
     private int id;
 
-    @Column(name = "title")
+    @Column(name = "title",nullable = false)
     private String title;
 
     @OneToMany(fetch = FetchType.LAZY,cascade = {CascadeType.PERSIST,CascadeType.MERGE,
             CascadeType.REFRESH,CascadeType.DETACH })
-    @JoinColumn(name = "product_id")
+    @JoinColumn(name = "product_id",nullable = false)
     private List<Product> products;
+
+    @ManyToOne(cascade = {CascadeType.PERSIST,CascadeType.MERGE,
+            CascadeType.REFRESH,CascadeType.DETACH },optional = false)
+    private User user;
 
     public ProductList() {
     }

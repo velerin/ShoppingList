@@ -5,7 +5,7 @@ import java.util.Collection;
 import java.util.List;
 
 @Entity
-@Table(name = "user")
+@Table(name = "users")
 public class User {
 
     @Id
@@ -13,44 +13,87 @@ public class User {
     @Column(name="id")
     private int id;
 
-    @Column(name="first_name")
+    @Column(name="first_name",nullable = false)
     private String firstName;
 
-    @Column(name="last_name")
+    @Column(name="last_name",nullable = false)
     private String lastName;
 
-    @Column(name="email",unique = true)
+    @Column(name="email",unique = true,nullable = false)
     private String email;
 
-    @Column(name = "userName")
+    @Column(name = "userName",unique = true,nullable = false)
     private String userName;
 
-    @Column(name = "password")
+    @Column(name = "password",nullable = false)
     private String password;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinTable(name = "users_roles",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private Collection<Role> roles;
+    @Column(name="enabled",nullable = false)
+    private boolean enabled;
+
+    @OneToMany(cascade = {CascadeType.PERSIST,CascadeType.MERGE,
+            CascadeType.REFRESH,CascadeType.DETACH })
+    @JoinColumn(name = "user_id")
+    private Collection<Authorities> authorities;
 
     @OneToMany(fetch = FetchType.LAZY,cascade = {CascadeType.PERSIST,CascadeType.MERGE,
             CascadeType.REFRESH,CascadeType.DETACH })
-    @JoinColumn(name = "list_id")
+    @JoinColumn(name = "user_id")
     private List<ProductList> productLists;
 
     public User() {
     }
 
-    public User(int id, String firstName, String lastName, String email, String userName, String password, Collection<Role> roles) {
+    public User(int id, String firstName, String lastName, String email, String userName, String password,boolean enabled, Collection<Authorities> authorities) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.userName = userName;
         this.password = password;
-        this.roles = roles;
+        this.enabled = enabled;
+        this.authorities = authorities;
         this.productLists = null;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
+
+    public Collection<Authorities> getRoles() {
+        return authorities;
+    }
+
+    public void setRoles(Collection<Authorities> authorities) {
+        this.authorities = authorities;
+    }
+
+    public List<ProductList> getProductLists() {
+        return productLists;
+    }
+
+    public void setProductLists(List<ProductList> productLists) {
+        this.productLists = productLists;
     }
 
     public int getId() {
@@ -92,6 +135,10 @@ public class User {
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", email='" + email + '\'' +
+                ", userName='" + userName + '\'' +
+                ", password='" + password + '\'' +
+                ", enabled=" + enabled +
+                ", roles=" + authorities +
                 ", productLists=" + productLists +
                 '}';
     }

@@ -3,7 +3,7 @@ package com.example.shoppingList.entity;
 import javax.persistence.*;
 
 @Entity
-@Table(name="product")
+@Table(name="products")
 public class Product {
 
     @Id
@@ -11,10 +11,10 @@ public class Product {
     @Column(name="id")
     private int id;
 
-    @Column(name = "amount")
+    @Column(name = "amount",nullable = false)
     private int amount;
 
-    @Column(name = "product_name")
+    @Column(name = "product_name",nullable = false)
     private String productName;
 
     public Product() {
