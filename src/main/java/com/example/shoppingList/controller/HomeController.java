@@ -26,10 +26,5 @@ public class HomeController {
         return "leaders";
     }
 
-    @GetMapping("/error")
-    public String error(){
-        return "error";
-    }
-
 
 }
