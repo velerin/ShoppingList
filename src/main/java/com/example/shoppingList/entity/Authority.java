@@ -1,10 +1,11 @@
 package com.example.shoppingList.entity;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
 @Table(name = "authorities")
-public class Authorities {
+public class Authority {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,12 +22,18 @@ public class Authorities {
             CascadeType.REFRESH,CascadeType.DETACH },optional = false)
     private User user;
 
-    public Authorities() {
+    public Authority() {
     }
 
-    public Authorities(String userName, String authority) {
+    public Authority(String userName, String authority) {
         this.userName = userName;
         this.authority = authority;
+    }
+
+    public Authority(String authority, String userName, User user) {
+        this.authority = authority;
+        this.userName = userName;
+        this.user = user;
     }
 
     public int getId() {
@@ -60,5 +67,18 @@ public class Authorities {
                 ", userName='" + userName + '\'' +
                 ", authority='" + authority + '\'' +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Authority)) return false;
+        Authority authority1 = (Authority) o;
+        return authority.equals(authority1.authority) && userName.equals(authority1.userName);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(authority, userName);
     }
 }

@@ -33,10 +33,10 @@ public class User {
     @Column(name = "enabled", nullable = false)
     private boolean enabled;
 
-    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE,
+    @OneToMany(fetch = FetchType.EAGER,cascade = {CascadeType.PERSIST, CascadeType.MERGE,
             CascadeType.REFRESH, CascadeType.DETACH})
     @JoinColumn(name = "user_id")
-    private Collection<Authorities> authorities;
+    private Collection<Authority> authorities;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE,
             CascadeType.REFRESH, CascadeType.DETACH})
@@ -46,7 +46,7 @@ public class User {
     public User() {
     }
 
-    public User(int id, String firstName, String lastName, String email, String userName, String password, boolean enabled, Collection<Authorities> authorities) {
+    public User(int id, String firstName, String lastName, String email, String userName, String password, boolean enabled, Collection<Authority> authorities) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -82,11 +82,11 @@ public class User {
         this.enabled = enabled;
     }
 
-    public Collection<Authorities> getRoles() {
+    public Collection<Authority> getRoles() {
         return authorities;
     }
 
-    public void setRoles(Collection<Authorities> authorities) {
+    public void setRoles(Collection<Authority> authorities) {
         this.authorities = authorities;
     }
 
@@ -153,4 +153,6 @@ public class User {
                 ", productLists=" + productLists +
                 '}';
     }
+
+
 }

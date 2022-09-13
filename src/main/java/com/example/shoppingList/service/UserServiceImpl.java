@@ -1,8 +1,9 @@
 package com.example.shoppingList.service;
 
+import com.example.shoppingList.constants.Roles;
 import com.example.shoppingList.dao.AuthorityRepository;
 import com.example.shoppingList.dao.UserRepository;
-import com.example.shoppingList.entity.Authorities;
+import com.example.shoppingList.entity.Authority;
 import com.example.shoppingList.entity.Product;
 import com.example.shoppingList.entity.ProductList;
 import com.example.shoppingList.entity.User;
@@ -34,10 +35,10 @@ public class UserServiceImpl implements UserService{
         if(checkIfUserExist(userModel.getEmail())){
             throw new UserAlreadyExistException("User already exists for this email");
         }
-        Authorities authorities = new Authorities(userModel.getUserName(), "ROLE_USER");
-        authorities.setId(0);
+        Authority authority = new Authority(userModel.getUserName(), Roles.USER.value);
+        authority.setId(0);
         User user = new User(0, userModel.getFirstName(), userModel.getLastName(), userModel.getEmail(),userModel.getUserName(),
-                passwordEncoder.encode( userModel.getPassword()),true,Collections.singletonList(authorities));
+                passwordEncoder.encode( userModel.getPassword()),true,Collections.singletonList(authority));
 
         ProductList list = new ProductList();
 
@@ -50,7 +51,7 @@ public class UserServiceImpl implements UserService{
         userRepository.save(user);
 
     }
-    private Collection<? extends GrantedAuthority> mapRolesToAuthorities(Collection<Authorities> authorities) {
+    private Collection<? extends GrantedAuthority> mapRolesToAuthorities(Collection<Authority> authorities) {
         return authorities.stream().map(authority -> new SimpleGrantedAuthority(authority.getUserName())).collect(Collectors.toList());
     }
 

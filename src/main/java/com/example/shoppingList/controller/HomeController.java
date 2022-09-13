@@ -8,12 +8,17 @@ public class HomeController {
 
     @GetMapping("/")
     public String home(){
-        return "home";
+        return "user";
     }
 
-    @GetMapping("/systems")
+    @GetMapping("/user")
+    public String user(){
+        return "user";
+    }
+
+    @GetMapping("/admins")
     public String systems(){
-        return "systems";
+        return "admins";
     }
 
     @GetMapping("/leaders")
