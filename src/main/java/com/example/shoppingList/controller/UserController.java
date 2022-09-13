@@ -1,6 +1,7 @@
 package com.example.shoppingList.controller;
 
-import com.example.shoppingList.constants.UserFieldsInView;
+import com.example.shoppingList.constants.UserFieldsForView;
+import com.example.shoppingList.dao.AuthorityRepository;
 import com.example.shoppingList.entity.User;
 import com.example.shoppingList.model.UserModel;
 import com.example.shoppingList.service.UserService;
@@ -19,6 +20,9 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private AuthorityRepository authorityRepository;
+
 
     @GetMapping("/showUsers")
     public String showUsers(
@@ -27,14 +31,14 @@ public class UserController {
             @RequestParam(name = "name", required = false) String name) {
 
         List<User> users;
-        UserFieldsInView sortConst = UserFieldsInView.LAST_NAME;
+        UserFieldsForView sortConst = UserFieldsForView.LAST_NAME;
         if (sort != null) {
             switch (sort) {
                 case 1:
-                    sortConst = UserFieldsInView.FIRST_NAME;
+                    sortConst = UserFieldsForView.FIRST_NAME;
                     break;
                 case 3:
-                    sortConst = UserFieldsInView.EMAIL;
+                    sortConst = UserFieldsForView.EMAIL;
                     break;
                 default:
 
@@ -44,12 +48,11 @@ public class UserController {
             users = userService.findAll(Sort.by(Sort.Direction.ASC, sortConst.label));
         } else {
             users = userService.findByFirstName(name);
-            model.addAttribute("name",name);
-            System.out.println(name);
+            model.addAttribute("name", name);
         }
 
 
-        model.addAttribute("userFields", UserFieldsInView.all());
+        model.addAttribute("userFields", UserFieldsForView.all());
         model.addAttribute("users", users);
 
         return "users/list-users";
@@ -58,20 +61,24 @@ public class UserController {
     @GetMapping("/showFormForAdd")
     public String showFormForAdd(Model model) {
         model.addAttribute("userModel", new UserModel());
-        model.addAttribute("from", "user");
+        model.addAttribute("from","user");
         return "registration-form.html";
     }
 
     @GetMapping("/showFormForUpdate")
     public String showFormForUpdate(@RequestParam("userId") final int id, Model model) {
+
         User user = userService.findById(id);
         model.addAttribute("user", user);
+
         return "users/user-form";
     }
 
     @PostMapping("/save")
-    public String saveUser(@ModelAttribute("user") User user) {
+    public String save(@ModelAttribute("user") User user) {
+
         userService.save(user);
+
         return "redirect:/users/showUsers";
     }
 

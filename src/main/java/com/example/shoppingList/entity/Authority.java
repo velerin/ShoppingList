@@ -24,6 +24,10 @@ public class Authority {
     public Authority() {
     }
 
+    public Authority(String authority) {
+        this.authority = authority;
+    }
+
     public Authority(String userName, String authority) {
         this.userName = userName;
         this.authority = authority;
@@ -69,10 +73,9 @@ public class Authority {
 
     @Override
     public String toString() {
-        return "Role{" +
-                "id=" + id +
+        return "Authority{" +
+                "authority='" + authority + '\'' +
                 ", userName='" + userName + '\'' +
-                ", authority='" + authority + '\'' +
                 '}';
     }
 
@@ -88,4 +91,5 @@ public class Authority {
     public int hashCode() {
         return Objects.hash(authority, userName);
     }
+
 }

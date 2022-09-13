@@ -11,7 +11,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.Objects;
 
@@ -42,7 +41,7 @@ public class RegistrationController {
             @Valid @ModelAttribute("userModel") UserModel userModel,
             @ModelAttribute ("from") String from,
             BindingResult bindingResult,
-            Model model, HttpSession session) {
+            Model model) {
 
         if (bindingResult.hasErrors()){
             return "registration-form";
@@ -60,8 +59,8 @@ public class RegistrationController {
 
         // create user account
         userService.register(userModel);
-
-        if(Objects.equals(model.getAttribute("from"), "user")){
+        System.out.println(model.getAttribute("from"));
+        if(Objects.equals(from, "user")){
             return "redirect:/users/showUsers";
         }
         return "redirect:/showMyLoginPage";

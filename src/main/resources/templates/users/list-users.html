@@ -41,7 +41,7 @@
 
     <table class="table table-bordered table-striped" >
         <thead class="table-dark">
-            <tr >
+            <tr>
               <th th:each="temp:${userFields}">
                   <a th:href="@{/users/showUsers?sort={sort}(sort=${temp.value})}" th:text="${temp.displayName}"></a>
               </th>
