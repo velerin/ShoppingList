@@ -56,7 +56,7 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
 			return;
 		}
 
-		response.sendRedirect(request.getContextPath() + "/");
+		response.sendRedirect(request.getContextPath() + "/error");
 	}
 
 }
