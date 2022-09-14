@@ -16,13 +16,11 @@ public class ProductList {
     @Column(name = "title",nullable = false)
     private String title = "Default list for new user";
 
-    @OneToMany(fetch = FetchType.LAZY,cascade = {CascadeType.PERSIST,CascadeType.MERGE,
-            CascadeType.REFRESH,CascadeType.DETACH })
+    @OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     @JoinColumn(name = "product_id")
     private List<Product> products;
 
-    @ManyToOne(cascade = {CascadeType.PERSIST,CascadeType.MERGE,
-            CascadeType.REFRESH,CascadeType.DETACH })
+    @ManyToOne(cascade = CascadeType.ALL)
     private User user;
 
     public ProductList() {
@@ -71,4 +69,11 @@ public class ProductList {
         this.products.add(product);
     }
 
+    @Override
+    public String toString() {
+        return "ProductList{" +
+                "title='" + title + '\'' +
+                ", products=" + products +
+                '}';
+    }
 }

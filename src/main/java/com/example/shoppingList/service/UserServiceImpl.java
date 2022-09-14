@@ -9,6 +9,7 @@ import com.example.shoppingList.entity.ProductList;
 import com.example.shoppingList.entity.User;
 import com.example.shoppingList.model.UserModel;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -16,10 +17,12 @@ import org.springframework.stereotype.Service;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
-public class UserServiceImpl implements UserService{
+public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserRepository userRepository;
@@ -32,13 +35,13 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public void register(UserModel userModel) {
-        if(checkIfUserExist(userModel.getEmail())){
+        if (checkIfUserExist(userModel.getEmail())) {
             throw new UserAlreadyExistException("User already exists for this email");
         }
         Authority authority = new Authority(userModel.getUserName(), Roles.USER.value);
         authority.setId(0);
-        User user = new User(0, userModel.getFirstName(), userModel.getLastName(), userModel.getEmail(),userModel.getUserName(),
-                passwordEncoder.encode( userModel.getPassword()),true,Collections.singletonList(authority));
+        User user = new User(0, userModel.getFirstName(), userModel.getLastName(), userModel.getEmail(), userModel.getUserName(),
+                passwordEncoder.encode(userModel.getPassword()), true, Collections.singletonList(authority));
 
         ProductList list = new ProductList();
 
@@ -46,11 +49,10 @@ public class UserServiceImpl implements UserService{
 
         list.addProduct(new Product());
 
-        System.out.println(user);
-
         userRepository.save(user);
 
     }
+
     private Collection<? extends GrantedAuthority> mapRolesToAuthorities(Collection<Authority> authorities) {
         return authorities.stream().map(authority -> new SimpleGrantedAuthority(authority.getUserName())).collect(Collectors.toList());
     }
@@ -63,5 +65,41 @@ public class UserServiceImpl implements UserService{
     @Override
     public User findByUserName(String userName) {
         return userRepository.findByUserName(userName);
+    }
+
+    @Override
+    public List<User> findAll(Sort sort) {
+        return userRepository.findAll(sort);
+    }
+
+    @Override
+    public void save(User user) {
+        User user1 = findById(user.getId());
+        user1.setFirstName(user.getFirstName());
+        user1.setLastName(user.getLastName());
+        Collection<Authority> authorities = user.getAuthorities();
+        if (authorities != null) {
+            for (Authority authority : authorities) {
+                if (!user1.getAuthorities().contains(authority)) {
+                    user1.addAuthority(authority);
+                }
+            }
+        }
+        userRepository.save(user1);
+    }
+
+    @Override
+    public void delete(int id) {
+        Optional<User> user = userRepository.findById(id);
+        if (user.isPresent()) {
+            System.out.println(user.get());
+            userRepository.delete(user.get());
+        }
+
+    }
+
+    @Override
+    public User findById(int id) {
+        return userRepository.findById(id).orElseThrow();
     }
 }

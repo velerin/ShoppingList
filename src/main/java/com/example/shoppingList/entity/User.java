@@ -33,13 +33,11 @@ public class User {
     @Column(name = "enabled", nullable = false)
     private boolean enabled;
 
-    @OneToMany(fetch = FetchType.EAGER,cascade = {CascadeType.PERSIST, CascadeType.MERGE,
-            CascadeType.REFRESH, CascadeType.DETACH})
+    @OneToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id")
     private Collection<Authority> authorities;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE,
-            CascadeType.REFRESH, CascadeType.DETACH})
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id")
     private List<ProductList> productLists;
 
@@ -56,46 +54,6 @@ public class User {
         this.enabled = enabled;
         this.authorities = authorities;
         this.productLists = Collections.singletonList(new ProductList());
-    }
-
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public boolean isEnabled() {
-        return enabled;
-    }
-
-    public void setEnabled(boolean enabled) {
-        this.enabled = enabled;
-    }
-
-    public Collection<Authority> getRoles() {
-        return authorities;
-    }
-
-    public void setRoles(Collection<Authority> authorities) {
-        this.authorities = authorities;
-    }
-
-    public List<ProductList> getProductLists() {
-        return productLists;
-    }
-
-    public void setProductLists(List<ProductList> productLists) {
-        this.productLists = productLists;
     }
 
     public int getId() {
@@ -130,6 +88,46 @@ public class User {
         this.email = email;
     }
 
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
+
+    public Collection<Authority> getAuthorities() {
+        return authorities;
+    }
+
+    public void setAuthorities(Collection<Authority> authorities) {
+        this.authorities = authorities;
+    }
+
+    public List<ProductList> getProductLists() {
+        return productLists;
+    }
+
+    public void setProductLists(List<ProductList> productLists) {
+        this.productLists = productLists;
+    }
+
     public void addProductList(ProductList list){
         if(this.productLists==null){
             this.productLists = new LinkedList<>();
@@ -137,6 +135,16 @@ public class User {
 
         this.productLists.add(list);
         list.setUser(this);
+    }
+
+    public void addAuthority(Authority authority){
+        if(this.authorities==null){
+            this.authorities = new LinkedList<>();
+        }
+
+        this.authorities.add(authority);
+        authority.setUser(this);
+        authority.setUserName(userName);
     }
 
     @Override

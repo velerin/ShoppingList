@@ -15,51 +15,43 @@
 </head>
 
 <body>
-	<h2>Company Home Page</h2>
+<div class="mainbox" style="margin-top: 50px;margin-left:50px">
+	<p class="display-1">Welcome to Application</p>
+
+
 	<hr>
 	
 	<p>
-	<div class="container-fluid">
 
 		Welcome to home page!
-
 
 	</p>
 	
 	<hr>
 
-	
-
 		User: <span sec:authentication="name"></span>
+
 		<br>
-<!--		Role(s): <span sec:authentication="principal.authority"></span>-->
-		<br><br>
 
 		<!-- Check for login error -->																	
-		<div th:if="${session.user}" >
-			<p th:text="'First name: ' + ${session.user.firstName} "></p>
-			<p th:text="'Last name: ' + ${session.user.lastName} "></p>
-			<p th:text="'Email: ' + ${session.user.email}"></p>
-		</div>		
-	</div>
-	
-	<div sec:authorize="hasRole('ROLE_MANAGER')">
+		<div th:if="${session.user}"  >
+			<p th:text="'First name: ' + ${session.user.firstName} "class="display-6"></p>
+			<p th:text="'Last name: ' + ${session.user.lastName} "class="display-6"></p>
+			<p th:text="'Email: ' + ${session.user.email}"class="display-6"></p>
+			<p>
+				<a th:href="@{/users/showUsers/showProductLists/{userId}(userId=${session.user.id})}" class="btn btn-info ">
+					Show your Product Lists</a>
+			</p>
+		</div>
 
-		<p>
-			<a th:href="@{/leaders}">Leadership Meeting</a>
-			(Only for Manager peeps)
-		</p>
+		<div sec:authorize="hasAnyRole('ROLE_MANAGER','ROLE_ADMIN')">
 
-	</div>	
+			<p>
+				<a th:href="@{/users/showUsers}" class="btn btn-info ">Show all users</a>
 
-	<div sec:authorize="hasRole('ROLE_ADMIN')">  
+			</p>
 
-		<p>
-			<a th:href="@{/systems}">IT Systems Meeting</a>
-			(Only for Admin peeps)
-		</p>
-	
-	</div>
+		</div>
 
 	<hr>
 	
@@ -72,6 +64,8 @@
 	
 	</form>
 	</div>
+</div>
+
 </body>
 
 </html>

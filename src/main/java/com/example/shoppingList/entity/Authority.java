@@ -18,8 +18,7 @@ public class Authority {
     @Column(name = "username",nullable = false)
     private String userName;
     
-    @ManyToOne(cascade = {CascadeType.PERSIST,CascadeType.MERGE,
-            CascadeType.REFRESH,CascadeType.DETACH },optional = false)
+    @ManyToOne(cascade = CascadeType.ALL)
     private User user;
 
     public Authority() {
@@ -44,6 +43,14 @@ public class Authority {
         this.id = id;
     }
 
+    public String getAuthority() {
+        return authority;
+    }
+
+    public void setAuthority(String authority) {
+        this.authority = authority;
+    }
+
     public String getUserName() {
         return userName;
     }
@@ -52,12 +59,12 @@ public class Authority {
         this.userName = userName;
     }
 
-    public String getAuthority() {
-        return authority;
+    public User getUser() {
+        return user;
     }
 
-    public void setAuthority(String authority) {
-        this.authority = authority;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     @Override
