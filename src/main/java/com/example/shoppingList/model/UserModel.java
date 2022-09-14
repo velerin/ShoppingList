@@ -1,6 +1,7 @@
 package com.example.shoppingList.model;
 
 import com.example.shoppingList.validation.FieldMatch;
+import com.example.shoppingList.validation.UniqueEmail;
 import com.example.shoppingList.validation.ValidEmail;
 
 import javax.validation.constraints.NotNull;
@@ -31,6 +32,7 @@ public class UserModel {
     private String lastName;
 
     @ValidEmail
+    @UniqueEmail
     @NotNull(message = "is required")
     @Size(min = 1, message = "is required")
     private String email;

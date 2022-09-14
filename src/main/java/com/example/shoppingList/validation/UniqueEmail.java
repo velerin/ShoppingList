@@ -4,12 +4,12 @@ import javax.validation.Constraint;
 import javax.validation.Payload;
 import java.lang.annotation.*;
 
-@Constraint(validatedBy = EmailValidator.class)
+@Constraint(validatedBy = EmailUniquenessValidation.class)
 @Target({ ElementType.TYPE, ElementType.FIELD, ElementType.ANNOTATION_TYPE })
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-public @interface ValidEmail {
-	String message() default "is invalid";
+public @interface UniqueEmail {
+	String message() default "is already in use";
 
 	Class<?>[] groups() default {};
 
