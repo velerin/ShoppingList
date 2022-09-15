@@ -18,28 +18,75 @@
 
   <div style="padding-top: 30px" class="panel-body">
 
-
-
-
       <form action="#" th:action="@{/users/save}"
                        th:object="${user}" method="POST">
-        <div class="panel panel-default">
-          <div class="panel-body">
-            <p th:text="'User Name: ' + ${userName}"></p>
-          </div>
-        </div>
 
         <!--Add hidden form field for update-->
         <input type="hidden" th:field="*{id}"/>
 
-        <input type="text" th:field ="*{firstName}"
-               class="form-control  mb-4 col-4" placeholder="First name">
+            <!--User name -->
+            <div class="row g-3 align-items-center">
+              <div class="col-auto">
+                <label for="disabledInput" class="col-form-label">Username: </label>
+              </div>
+              <div class="col-auto">
+                <input th:field="*{userName}" class="form-control" id="disabledInput" type="text" placeholder="Disabled input here..." disabled>
+              </div>
+              <div class="col-auto">
+                <span id="passwordHelpInline" class="form-text">
+                </span>
+              </div>
+            </div>
 
-        <input type="text" th:field ="*{lastName}"
-               class="form-control  mb-4 col-4" placeholder="Last name">
+            <br>
 
-        <input type="text" th:field ="*{email}"
-               class="form-control  mb-4 col-4" placeholder="Email">
+            <!--First name -->
+            <div class="row g-3 align-items-center">
+              <div class="col-auto">
+                <label for="inputPassword7" class="col-form-label">First Name:</label>
+              </div>
+              <div class="col-auto">
+                <input th:field="*{firstName}" type="text" id="inputPassword7" class="form-control" aria-describedby="passwordHelpInline">
+              </div>
+              <div class="col-auto">
+                <span id="passwordHelpInline2" class="form-text">
+                </span>
+              </div>
+            </div>
+
+            <br>
+
+            <!--Last name -->
+            <div class="row g-3 align-items-center">
+              <div class="col-auto">
+                <label for="inputPassword8" class="col-form-label">Last Name:</label>
+              </div>
+              <div class="col-auto">
+                <input th:field="*{lastName}" type="text" id="inputPassword8" class="form-control" aria-describedby="passwordHelpInline">
+              </div>
+              <div class="col-auto">
+                <span id="passwordHelpInline3" class="form-text">
+                </span>
+              </div>
+            </div>
+
+            <br>
+
+            <!--Email -->
+            <div class="row g-3 align-items-center">
+              <div class="col-auto">
+                <label for="inputPassword9" class="col-form-label">Email:    </label>
+              </div>
+              <div class="col-auto">
+                <input th:field="*{email}" type="text" id="inputPassword9" class="form-control" placeholder="Disabled input" aria-describedby="Disabled input example">
+              </div>
+              <div class="col-auto">
+                <span id="passwordHelpInline4" class="form-text">
+                </span>
+              </div>
+            </div>
+
+        <br>
 
         <label class="checkbox-inline">
           <input type="checkbox" name="enabled" th:checked="*{enabled}"/> User Enabled
@@ -54,8 +101,6 @@
     </div>
 
 </div>
-
-
 
 </body>
 </html>

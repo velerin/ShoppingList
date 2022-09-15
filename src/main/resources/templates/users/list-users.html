@@ -47,7 +47,9 @@
               </th>
               <th>Action</th>
               <th>Update</th>
-              <th>Delete</th>
+                <div sec:authorize="hasRole( 'ROLE_ADMIN')">
+                     <th>Delete</th>
+                </div>
             </tr>
 
 
