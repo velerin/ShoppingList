@@ -11,7 +11,9 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.util.Objects;
 
 @Controller
 @RequestMapping("/register")
@@ -29,20 +31,20 @@ public class RegistrationController {
     }
 
     @GetMapping("/showRegistrationForm")
-    public String showMyLoginPage(Model theModel) {
-
-        theModel.addAttribute("userModel", new UserModel());
-
+    public String showMyLoginPage(Model model) {
+        model.addAttribute("userModel", new UserModel());
+        model.addAttribute("from","register");
         return "registration-form";
     }
 
     @PostMapping("/processRegistrationForm")
     public String processRegistrationForm(
             @Valid @ModelAttribute("userModel") UserModel userModel,
-            BindingResult theBindingResult,
-            Model theModel) {
+            @ModelAttribute ("from") String from,
+            BindingResult bindingResult,
+            Model model, HttpSession session) {
 
-        if (theBindingResult.hasErrors()){
+        if (bindingResult.hasErrors()){
             return "registration-form";
         }
 
@@ -50,8 +52,8 @@ public class RegistrationController {
 
         User existing = userService.findByUserName(userName);
         if (existing != null){
-            theModel.addAttribute("userModel", new UserModel());
-            theModel.addAttribute("registrationError", "User name already exists.");
+            model.addAttribute("userModel", new UserModel());
+            model.addAttribute("registrationError", "User name already exists.");
 
             return "registration-form";
         }
@@ -59,6 +61,9 @@ public class RegistrationController {
         // create user account
         userService.register(userModel);
 
-        return "registration-confirmation";
+        if(Objects.equals(model.getAttribute("from"), "user")){
+            return "redirect:/users/showUsers";
+        }
+        return "redirect:/showMyLoginPage";
     }
 }

@@ -39,7 +39,8 @@
 
 				<!-- Registration Form -->
 				<form th:action="@{/register/processRegistrationForm}"
-					  th:object="${userModel}" method="POST"
+					  th:object="${userModel}"
+					  method="POST"
 					  class="form-horizontal">
 
 					<!-- Place for messages: error, alert etc ... -->
@@ -131,6 +132,7 @@
 						</ul>
 					</div>
 
+					<input type="hidden" th:value="${from}" name="from"/>
 
 					<!-- Register Button -->
 					<div style="margin-top: 10px" class="form-group">

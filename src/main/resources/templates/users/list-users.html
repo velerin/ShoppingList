@@ -20,17 +20,36 @@
             class="btn btn-primary btn-sm mb-3">
             Add User
         </a>
+        <br>
+        <form th:action="@{/users/showUsers}"
+              method="GET"
+              class="form-horizontal">
+            <div class="input-group mb-3">
+                <input type="text" th:name="name" class="form-control" th:placeholder="${name}?${name}:'First Name'"
+                       aria-label="Username" aria-describedby="basic-addon1">
+                <input type="hidden" th:value="${name}">
+            </div>
+        <input type="submit" value="Search" class="btn btn-primary btn-sm mb-3" />
+            <a th:href="@{/users/showUsers}"
+               class="btn btn-primary btn-sm mb-3">
+                Reset
+            </a>
+        </form>
+
+
     </div>
+
     <table class="table table-bordered table-striped" >
         <thead class="table-dark">
-            <tr>
-              <th>First Name</th>
-              <th>Last Name</th>
-              <th>Email</th>
+            <tr >
+              <th th:each="temp:${userFields}">
+                  <a th:href="@{/users/showUsers?sort={sort}(sort=${temp.value})}" th:text="${temp.displayName}"></a>
+              </th>
               <th>Action</th>
               <th>Update</th>
               <th>Delete</th>
             </tr>
+
 
         </thead>
 

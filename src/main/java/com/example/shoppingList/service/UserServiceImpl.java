@@ -95,11 +95,17 @@ public class UserServiceImpl implements UserService {
             System.out.println(user.get());
             userRepository.delete(user.get());
         }
-
     }
 
     @Override
     public User findById(int id) {
         return userRepository.findById(id).orElseThrow();
     }
+
+    @Override
+    public List<User> findByFirstName(String firstName) {
+        return userRepository.findAllByFirstName(firstName);
+    }
+
+
 }

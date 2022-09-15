@@ -21,4 +21,6 @@ public interface UserService {
     void delete(int id);
 
     User findById(int id);
+
+    List<User> findByFirstName(String firstName);
 }
