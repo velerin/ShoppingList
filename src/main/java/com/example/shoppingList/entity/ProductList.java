@@ -67,6 +67,7 @@ public class ProductList {
         }
 
         this.products.add(product);
+        product.setProductList(this);
     }
 
     @Override

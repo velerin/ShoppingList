@@ -2,6 +2,7 @@ package com.example.shoppingList.controller;
 
 import com.example.shoppingList.constants.UserFieldsForView;
 import com.example.shoppingList.dao.AuthorityRepository;
+import com.example.shoppingList.dao.ProductListRepository;
 import com.example.shoppingList.entity.User;
 import com.example.shoppingList.model.UserModel;
 import com.example.shoppingList.service.UserService;
@@ -21,8 +22,10 @@ public class UserController {
     private UserService userService;
 
     @Autowired
-    private AuthorityRepository authorityRepository;
+    private ProductListRepository productListRepository;
 
+    @Autowired
+    private AuthorityRepository authorityRepository;
 
     @GetMapping("/showUsers")
     public String showUsers(
@@ -87,5 +90,7 @@ public class UserController {
         userService.delete(id);
         return "redirect:/users/showUsers";
     }
+
+
 
 }

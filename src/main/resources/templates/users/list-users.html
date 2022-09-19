@@ -16,11 +16,7 @@
     <hr>
     <!--Add a button -->
     <div sec:authorize="hasAnyRole('ROLE_MANAGER', 'ROLE_ADMIN')">
-        <a th:href="@{/users/showFormForAdd}"
-            class="btn btn-primary btn-sm mb-3">
-            Add User
-        </a>
-        <br>
+
         <form th:action="@{/users/showUsers}"
               method="GET"
               class="form-horizontal">
@@ -35,8 +31,10 @@
                 Reset
             </a>
         </form>
-
-
+        <a th:href="@{/users/showFormForAdd}"
+           class="btn btn-primary btn-sm mb-3">
+            Add User
+        </a>
     </div>
 
     <table class="table table-bordered table-striped" >
@@ -61,7 +59,7 @@
                 <td th:text="${temp.lastName}"/>
                 <td th:text="${temp.email}"/>
                 <td>
-                    <a th:href="@{/users/showUsers/showProductLists/{userId}(userId=${temp.id})}"
+                    <a th:href="@{/shoppinglists/showProductLists/{userId}(userId=${temp.id})}"
                        class="btn btn-info btn-sm">
                         Show List of Products
                     </a>

@@ -40,7 +40,7 @@
 			<p th:text="'Last name: ' + ${session.user.lastName} "class="display-6"></p>
 			<p th:text="'Email: ' + ${session.user.email}"class="display-6"></p>
 			<p>
-				<a th:href="@{/users/showUsers/showProductLists/{userId}(userId=${session.user.id})}" class="btn btn-info ">
+				<a th:href="@{/shoppinglists/showProductLists/{userId}(userId=${session.user.id})}" class="btn btn-info ">
 					Show your Product Lists</a>
 			</p>
 		</div>
