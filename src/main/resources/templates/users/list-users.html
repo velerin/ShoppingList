@@ -59,7 +59,7 @@
                 <td th:text="${temp.lastName}"/>
                 <td th:text="${temp.email}"/>
                 <td>
-                    <a th:href="@{/shoppinglists/showProductLists/{userId}(userId=${temp.id})}"
+                    <a th:href="@{/shoppinglists/{userId}/showProductLists(userId=${temp.id})}"
                        class="btn btn-info btn-sm">
                         Show List of Products
                     </a>

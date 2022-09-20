@@ -1,6 +1,6 @@
 package com.example.shoppingList.constants;
 
-public enum Roles {
+public enum Authorities {
 
 
     USER("ROLE_USER"),
@@ -9,7 +9,7 @@ public enum Roles {
 
     public final String value;
 
-    Roles(String roleUser) {
+    Authorities(String roleUser) {
         this.value = roleUser;
     }
 }

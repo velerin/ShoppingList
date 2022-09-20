@@ -1,8 +1,6 @@
 package com.example.shoppingList.controller;
 
 import com.example.shoppingList.constants.UserFieldsForView;
-import com.example.shoppingList.dao.AuthorityRepository;
-import com.example.shoppingList.dao.ProductListRepository;
 import com.example.shoppingList.entity.User;
 import com.example.shoppingList.model.UserModel;
 import com.example.shoppingList.service.UserService;
@@ -20,12 +18,6 @@ public class UserController {
 
     @Autowired
     private UserService userService;
-
-    @Autowired
-    private ProductListRepository productListRepository;
-
-    @Autowired
-    private AuthorityRepository authorityRepository;
 
     @GetMapping("/showUsers")
     public String showUsers(
@@ -47,17 +39,15 @@ public class UserController {
 
             }
         }
+
         if (name == null) {
             users = userService.findAll(Sort.by(Sort.Direction.ASC, sortConst.label));
         } else {
             users = userService.findByFirstName(name);
             model.addAttribute("name", name);
         }
-
-
         model.addAttribute("userFields", UserFieldsForView.all());
         model.addAttribute("users", users);
-
         return "users/list-users";
     }
 
@@ -65,23 +55,19 @@ public class UserController {
     public String showFormForAdd(Model model) {
         model.addAttribute("userModel", new UserModel());
         model.addAttribute("from","user");
-        return "registration-form.html";
+        return "registration-form";
     }
 
     @GetMapping("/showFormForUpdate")
     public String showFormForUpdate(@RequestParam("userId") final int id, Model model) {
-
         User user = userService.findById(id);
         model.addAttribute("user", user);
-
         return "users/user-form";
     }
 
     @PostMapping("/save")
     public String save(@ModelAttribute("user") User user) {
-
         userService.save(user);
-
         return "redirect:/users/showUsers";
     }
 

@@ -11,13 +11,12 @@
 
 </head>
 <body>
-<div class="container">
+<div class="container" sec:author>
     <h3>Product Lists Directory</h3>
     <hr>
-    <!--Add a button -->
     <div>
 
-        <form th:action="@{/shoppinglists/showProductLists/{userId}(userId=${userId})}"
+        <form th:action="@{/shoppinglists/{userId}/showProductLists(userId=${userId})}"
               method="GET"
               class="form-horizontal">
             <div class="input-group mb-3">
@@ -26,13 +25,13 @@
 
             </div>
         <input type="submit" value="Search" class="btn btn-primary btn-sm mb-3" />
-            <a th:href="@{/shoppinglists/showProductLists/{userId}(userId=${userId})}"
+            <a th:href="@{/shoppinglists/{userId}/showProductLists(userId=${userId})}"
                class="btn btn-primary btn-sm mb-3">
                 Reset
             </a>
         </form>
 
-        <a th:href="@{/shoppinglists/showFormForAdd}"
+        <a th:href="@{/shoppinglists/{userId}/showFormForAdd(userId=${userId})}"
            class="btn btn-primary">
             Add List
         </a>
@@ -45,8 +44,9 @@
         <thead class="table-primary" th:each="temp:${productListNames}">
             <tr>
               <th>
-                  <a th:href="@{/shoppinglists/showProductLists/{userId}(userId=${userId})}" th:text="${temp.displayName}"></a>
+                  <a th:href="@{/shoppinglists/{userId}/showProductLists(userId=${userId})}" th:text="${temp.displayName}"></a>
               </th>
+                <th></th>
                 <th></th>
                 <th></th>
                 <th></th>
@@ -64,8 +64,9 @@
         <tbody th:each="temp:${productLists}">
             <tr class="table-info">
                 <td >
-                    <a th:href="@{/shoppinglists/showProductLists/{userId}/{listId}(userId=${userId},listId=${temp.id})}" th:text="${temp.title}"></a>
+                    <a th:href="@{/shoppinglists/{userId}/showProductLists/{listId}(userId=${userId},listId=${temp.id})}" th:text="${temp.title}"></a>
                 </td>
+                <td></td>
                 <td></td>
                 <td></td>
                 <td></td>
@@ -88,7 +89,7 @@
 
                 <div th:each="header:${productNames}">
                     <td  class="table-success" >
-                        <a th:href="@{/shoppinglists/showProductLists/{userId}/{listId}(userId=${userId},listId=${temp.id},sort=${header.value})}" th:text="${header.displayName}"/>
+                        <a th:href="@{/shoppinglists/{userId}/showProductLists/{listId}(userId=${userId},listId=${temp.id},sort=${header.value})}" th:text="${header.displayName}"/>
                     </td>
                 </div>
 
@@ -104,18 +105,19 @@
                 <td th:text="${product.productName}"/>
                 <td th:text="${product.amount}"/>
                 <td th:text="${product.pricePerPiece}"/>
+                <td th:with="amount=${product.amount},pricePerPiece=${product.pricePerPiece},total=${amount*pricePerPiece}"
+                    th:text="${#numbers.formatDecimal(total, 1, 'COMMA', 2, 'POINT')}"/>
                 <td th:text="${product.currency}"/>
-
                 <td></td>
 
                 <td>
                     <!-- Add "update" button/link -->
-                    <a th:href="@{/products/showFormForUpdate(productId=${product.id})}" class="btn btn-info btn-sm">Update</a>
+                    <a th:href="@{/products/{userId}/showFormForUpdate(userId=${userId},productId=${product.id})}" class="btn btn-info btn-sm">Update</a>
                 </td>
 
                 <td>
                     <!-- Add "delete" button/link -->
-                    <a th:href="@{/products/delete(productId=${product.id})}"
+                    <a th:href="@{/products/{userId}/delete(userId=${userId},productId=${product.id})}"
                        class="btn btn-danger btn-sm"
                        onclick="if (!(confirm('Are you sure you want to delete this product?'))) return false">
                         Delete

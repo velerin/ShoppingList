@@ -21,7 +21,7 @@ public class Product {
     private double pricePerPiece = -1.00;
 
     @Column(name="currency",nullable = false)
-    private String currency;
+    private String currency = "PLN";
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "product_list_id")

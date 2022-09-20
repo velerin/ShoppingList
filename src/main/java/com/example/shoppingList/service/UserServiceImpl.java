@@ -1,6 +1,6 @@
 package com.example.shoppingList.service;
 
-import com.example.shoppingList.constants.Roles;
+import com.example.shoppingList.constants.Authorities;
 import com.example.shoppingList.dao.AuthorityRepository;
 import com.example.shoppingList.dao.UserRepository;
 import com.example.shoppingList.entity.Authority;
@@ -38,7 +38,7 @@ public class UserServiceImpl implements UserService {
         if (checkIfUserExist(userModel.getEmail())) {
             throw new UserAlreadyExistException("User already exists for this email");
         }
-        Authority authority = new Authority(userModel.getUserName(), Roles.USER.value);
+        Authority authority = new Authority(userModel.getUserName(), Authorities.USER.value);
         authority.setId(0);
         User user = new User(0, userModel.getFirstName(), userModel.getLastName(), userModel.getEmail(), userModel.getUserName(),
                 passwordEncoder.encode(userModel.getPassword()), true, Collections.singletonList(authority));
@@ -99,7 +99,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User findById(int id) {
-        return userRepository.findById(id).orElseThrow();
+        Optional<User> user = userRepository.findById(id);
+        return user.orElseGet(User::new);
     }
 
     @Override

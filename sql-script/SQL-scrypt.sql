@@ -20,9 +20,9 @@ ALTER TABLE users ADD CONSTRAINT uc_users_username UNIQUE (username);
 
 INSERT INTO `users` (username, password, first_name, last_name, email, enabled)
 VALUES
-('john','$2a$12$TCQZHxH4oWniBX1nDDYere9UszxzrvBkyeQSnIYE158jQuQ7X2uUO','John','Doe','john@luv2code.com',1),
-('mary','$2a$12$TCQZHxH4oWniBX1nDDYere9UszxzrvBkyeQSnIYE158jQuQ7X2uUO','Mary','Public','mary@luv2code.com',1),
-('susan','$2a$12$TCQZHxH4oWniBX1nDDYere9UszxzrvBkyeQSnIYE158jQuQ7X2uUO','Susan','Adams','susan@luv2code.com',1);
+('john','$2a$12$TCQZHxH4oWniBX1nDDYere9UszxzrvBkyeQSnIYE158jQuQ7X2uUO','John','Doe','john@gmail.com',1),
+('mary','$2a$12$TCQZHxH4oWniBX1nDDYere9UszxzrvBkyeQSnIYE158jQuQ7X2uUO','Mary','Public','mary@gmail.com',1),
+('susan','$2a$12$TCQZHxH4oWniBX1nDDYere9UszxzrvBkyeQSnIYE158jQuQ7X2uUO','Susan','Adams','susan@gmail.com',1);
 
 CREATE TABLE authorities (
   id INT AUTO_INCREMENT NOT NULL,
