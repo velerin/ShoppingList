@@ -9,6 +9,8 @@ import java.util.List;
 @RepositoryRestResource(path = "shoppinglists")
 public interface ProductListRepository extends JpaRepository<ProductList,Integer> {
 
-    List<ProductList> findAllByUserId(int id);
-    List<ProductList> findAllByUserIdAndTitle(int id,String title);
+    List<ProductList> findAllByUserId(int userId);
+    List<ProductList> findAllByUserIdAndTitleContainingIgnoreCase(int userId, String title);
+    List<ProductList> findAllByUserIdAndTitleContainingIgnoreCaseAndId(int userId, String title, int listId);
+    List<ProductList> findAllByUserIdAndId(int userId,int listId);
 }

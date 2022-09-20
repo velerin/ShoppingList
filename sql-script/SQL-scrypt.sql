@@ -60,14 +60,14 @@ CREATE TABLE products (
 
 INSERT INTO `products` (amount, product_name, price_per_piece, currency, product_list_id, product_id)
 VALUES
-(1,'Cheese',1.00,'PLN',1,1),
-(2,'Milk',1.00,'PLN',2,2),
-(1,'Jogurt',1.00,'PLN',3,3),
-(2,'Cheese',1.00,'PLN',4,4),
-(3,'Milk',1.00,'PLN',5,5),
-(2,'Jogurt',1.00,'PLN',6,6),
-(5,'Cheese',1.00,'PLN',1,1),
-(6,'Milk',1.00,'PLN',2,2),
+(1,'Bree',1.00,'PLN',1,1),
+(2,'Łaciate',1.00,'PLN',2,2),
+(1,'Jogobela',1.00,'PLN',3,3),
+(2,'White cheese',1.00,'PLN',4,4),
+(3,'Soja Milk',1.00,'PLN',5,5),
+(2,'Milka jogurt',1.00,'PLN',6,6),
+(5,'Blue cheese',1.00,'PLN',1,1),
+(6,'Almond milk',1.00,'PLN',2,2),
 (7,'Jogurt',1.00,'PLN',3,3);
 
 ALTER TABLE authorities ADD CONSTRAINT FK_AUTHORITIES_ON_USER FOREIGN KEY (user_id) REFERENCES users (id);

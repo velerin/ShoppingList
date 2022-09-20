@@ -25,20 +25,27 @@ public class ProductController {
     @Autowired
     private ProductRepository productRepository;
 
-    @GetMapping("/showProductLists/{userId}")
+    @GetMapping(value={"/showProductLists/{userId}","/showProductLists/{userId}/{listId}"})
     public String showProductsListForUser(@PathVariable final int userId,
                                           @PathVariable(required = false) final Integer listId,
                                           @RequestParam(name = "listName", required = false) String listName,
                                           @RequestParam(name = "sort", required = false) Integer sort,
                                           Model model) {
-        sort = (sort == null ? 1 : sort);
+
+
         List<ProductList> list;
-        if (listName != null) {
-            list = productListRepository.findAllByUserIdAndTitle(userId, listName);
-        } else {
+
+        if(listName!=null&&listId!=null){
+            list= productListRepository.findAllByUserIdAndTitleContainingIgnoreCaseAndId(userId,listName,listId);
+        } else if (listName != null) {
+            list = productListRepository.findAllByUserIdAndTitleContainingIgnoreCase(userId, listName);
+        }else if(listId!=null){
+            list=productListRepository.findAllByUserIdAndId(userId,listId);
+        }else{
             list = productListRepository.findAllByUserId(userId);
         }
 
+        sort = (sort == null ? 1 : sort);
         Integer finalSort = sort;
         list.forEach(s->s.getProducts().sort((s1, s2)->{
             switch (finalSort) {
@@ -46,6 +53,8 @@ public class ProductController {
                     return Integer.compare(s1.getAmount(), s2.getAmount());
                 case 3:
                     return Double.compare(s1.getPricePerPiece(), s2.getPricePerPiece());
+                case 4:
+                    return s1.getCurrency().compareTo(s2.getCurrency());
                 default:
                     return s1.getProductName().compareTo(s2.getProductName());
             }
