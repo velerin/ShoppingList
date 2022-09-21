@@ -17,7 +17,7 @@ public class ProductList {
     private String title = "Default list for new user";
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "product_id")
+    @JoinColumn(name = "product_list_id")
     private List<Product> products;
 
     @ManyToOne(cascade = {CascadeType.MERGE,

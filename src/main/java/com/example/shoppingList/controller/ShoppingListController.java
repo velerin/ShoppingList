@@ -101,32 +101,18 @@ public class ShoppingListController {
                        @ModelAttribute("list") ProductList list,
                        BindingResult bindingResult) {
 
-        if (bindingResult.hasErrors()) {
-            return "products/product-list-form";
-        }
         User user = userService.findById(userId);
-        if(list.getId()!=0){
+
+        if (list.getId() == 0) {
             list.setUser(user);
             productListRepository.save(list);
-        }else{
-            user.addProductList(list);
-            userService.save(user);
+        } else {
+            ProductList productList = productListRepository.getReferenceById(list.getId());
+            productList.setTitle(list.getTitle());
+            productListRepository.save(productList);
         }
 
         return "redirect:/shoppinglists/" + userId + "/showProductLists/";
-    }
-
-    @GetMapping("/showFormForUpdate")
-    public String showFormForUpdate(@RequestParam final Integer userId, Model model) throws Exception {
-
-        Optional<ProductList> list = productListRepository.findById(userId);
-
-        if (list.isEmpty()) {
-            throw new Exception("NotFound");
-        }
-        model.addAttribute("list", list.get());
-
-        return "products/product-list-form";
     }
 
     @GetMapping("/{userId}/delete")

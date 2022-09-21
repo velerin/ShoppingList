@@ -54,26 +54,25 @@ CREATE TABLE products (
    price_per_piece DOUBLE NOT NULL,
    currency VARCHAR(255) NOT NULL,
    product_list_id INT NULL,
-   product_id INT NULL,
    CONSTRAINT pk_products PRIMARY KEY (id)
 );
 
-INSERT INTO `products` (amount, product_name, price_per_piece, currency, product_list_id, product_id)
+
+INSERT INTO `products` (amount, product_name, price_per_piece, currency, product_list_id)
 VALUES
-(1,'Bree',1.00,'PLN',1,1),
-(2,'Łaciate',1.00,'PLN',2,2),
-(1,'Jogobela',1.00,'PLN',3,3),
-(2,'White cheese',1.00,'PLN',4,4),
-(3,'Soja Milk',1.00,'PLN',5,5),
-(2,'Milka jogurt',1.00,'PLN',6,6),
-(5,'Blue cheese',1.00,'PLN',1,1),
-(6,'Almond milk',1.00,'PLN',2,2),
-(7,'Jogurt',1.00,'PLN',3,3);
+(1,'Bree',1.00,'PLN',1),
+(2,'Łaciate',1.00,'PLN',2),
+(1,'Jogobela',1.00,'PLN',3),
+(2,'White cheese',1.00,'PLN',4),
+(3,'Soja Milk',1.00,'PLN',5),
+(2,'Milka jogurt',1.00,'PLN',6),
+(5,'Blue cheese',1.00,'PLN',1),
+(6,'Almond milk',1.00,'PLN',2),
+(7,'Jogurt',1.00,'PLN',3);
 
 ALTER TABLE authorities ADD CONSTRAINT FK_AUTHORITIES_ON_USER FOREIGN KEY (user_id) REFERENCES users (id);
 
 ALTER TABLE lists ADD CONSTRAINT FK_LISTS_ON_USER FOREIGN KEY (user_id) REFERENCES users (id);
 
-ALTER TABLE products ADD CONSTRAINT FK_PRODUCTS_ON_PRODUCT FOREIGN KEY (product_id) REFERENCES lists (id);
+ALTER TABLE products ADD CONSTRAINT FK_PRODUCTS_ON_PRODUCT_LIST FOREIGN KEY (product_list_id) REFERENCES lists (id);
 
-ALTER TABLE products ADD CONSTRAINT FK_PRODUCTS_ON_PRODUCTLIST FOREIGN KEY (product_list_id) REFERENCES lists (id);
