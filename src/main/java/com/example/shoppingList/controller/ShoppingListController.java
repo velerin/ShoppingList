@@ -14,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -98,8 +99,12 @@ public class ShoppingListController {
 
     @PostMapping("/{userId}/save")
     public String save(@PathVariable final Integer userId,
-                       @ModelAttribute("list") ProductList list,
+                       @Valid @ModelAttribute("list") ProductList list,
                        BindingResult bindingResult) {
+
+        if (bindingResult.hasErrors()){
+            return "products/product-list-form";
+        }
 
         User user = userService.findById(userId);
 

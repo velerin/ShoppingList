@@ -1,6 +1,8 @@
 package com.example.shoppingList.entity;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -13,6 +15,8 @@ public class ProductList {
     @Column(name = "id")
     private int id;
 
+    @NotNull(message = "is required")
+    @Size(min=1,message = "is required")
     @Column(name = "title", nullable = false)
     private String title = "Default list for new user";
 
