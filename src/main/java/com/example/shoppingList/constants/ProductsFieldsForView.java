@@ -9,8 +9,8 @@ public enum ProductsFieldsForView {
     PRODUCT_NAME("product_name",1,"Product Name"),
     AMOUNT("amount",2,"Amount"),
     PRICE_PER_PIECE("price_per_piece",3,"Price per piece"),
-    TOTAL("irrelevant",4,"Total"),
-    CURRENCY("currency",5,"Currency");
+    CURRENCY("currency",5,"Currency"),
+    TOTAL("irrelevant",4,"Total");
 
     private final String label;
 

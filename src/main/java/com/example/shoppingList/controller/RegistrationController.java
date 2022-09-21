@@ -59,7 +59,6 @@ public class RegistrationController {
 
         // create user account
         userService.register(userModel);
-        System.out.println(model.getAttribute("from"));
         if(Objects.equals(from, "user")){
             return "redirect:/users/showUsers";
         }

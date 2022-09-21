@@ -17,8 +17,12 @@ public class Authority {
 
     @Column(name = "username",nullable = false)
     private String userName;
-    
-    @ManyToOne(cascade = CascadeType.ALL)
+
+    @ManyToOne(cascade = {CascadeType.MERGE,
+                          CascadeType.DETACH,
+                          CascadeType.PERSIST,
+                          CascadeType.PERSIST,
+                          CascadeType.REFRESH})
     private User user;
 
     public Authority() {

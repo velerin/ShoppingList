@@ -3,27 +3,31 @@ package com.example.shoppingList.entity;
 import javax.persistence.*;
 
 @Entity
-@Table(name="products")
+@Table(name = "products")
 public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="id")
+    @Column(name = "id")
     private int id;
 
-    @Column(name = "amount",nullable = false)
+    @Column(name = "amount", nullable = false)
     private int amount = -1;
 
-    @Column(name = "product_name",nullable = false)
+    @Column(name = "product_name", nullable = false)
     private String productName = "Default product for new user";
 
-    @Column(name = "price_per_piece",nullable = false)
+    @Column(name = "price_per_piece", nullable = false)
     private double pricePerPiece = -1.00;
 
-    @Column(name="currency",nullable = false)
+    @Column(name = "currency", nullable = false)
     private String currency = "PLN";
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = {CascadeType.MERGE,
+                          CascadeType.DETACH,
+                          CascadeType.PERSIST,
+                          CascadeType.PERSIST,
+                          CascadeType.REFRESH})
     @JoinColumn(name = "product_list_id")
     private ProductList productList;
 

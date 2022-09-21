@@ -5,7 +5,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 @Entity
-@Table(name="lists")
+@Table(name = "lists")
 public class ProductList {
 
     @Id
@@ -13,18 +13,23 @@ public class ProductList {
     @Column(name = "id")
     private int id;
 
-    @Column(name = "title",nullable = false)
+    @Column(name = "title", nullable = false)
     private String title = "Default list for new user";
 
-    @OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "product_id")
     private List<Product> products;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = {CascadeType.MERGE,
+                          CascadeType.DETACH,
+                          CascadeType.PERSIST,
+                          CascadeType.PERSIST,
+                          CascadeType.REFRESH})
     private User user;
 
     public ProductList() {
     }
+
     public ProductList(String title) {
         this.title = title;
     }
@@ -61,8 +66,8 @@ public class ProductList {
         this.user = user;
     }
 
-    public void addProduct(Product product){
-        if(this.products==null){
+    public void addProduct(Product product) {
+        if (this.products == null) {
             this.products = new LinkedList<>();
         }
 
