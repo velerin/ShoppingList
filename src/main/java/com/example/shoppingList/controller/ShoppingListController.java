@@ -18,7 +18,6 @@ import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 @Controller
 @RequestMapping("/shoppinglists")
@@ -78,20 +77,15 @@ public class ShoppingListController {
 
     @GetMapping("/{userId}/showFormForAdd")
     public String showFormForAdd(@PathVariable final Integer userId, @RequestParam(required = false) final Integer listId, Model model) throws Exception {
-        Optional<ProductList> productList;
-        ProductList viewProductList;
+
+        ProductList productList;
         if (listId != null) {
-            productList = productListRepository.findById(listId);
-            if (productList.isPresent()) {
-                viewProductList = productList.get();
-            } else {
-                throw new Exception("List not found");
-            }
+            productList = productListRepository.getReferenceById(listId);
         } else {
-            viewProductList = new ProductList();
+            productList = new ProductList();
         }
 
-        model.addAttribute("list", viewProductList);
+        model.addAttribute("list", productList);
         model.addAttribute("userId", userId);
 
         return "products/product-list-form";
@@ -106,9 +100,8 @@ public class ShoppingListController {
             return "products/product-list-form";
         }
 
-        User user = userService.findById(userId);
-
         if (list.getId() == 0) {
+            User user = userService.findById(userId);
             list.setUser(user);
             productListRepository.save(list);
         } else {

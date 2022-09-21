@@ -37,7 +37,7 @@ public class CurrencyExchangeServiceImpl implements CurrencyExchangeService {
         for (String link : links) {
             for (String endPart : endPartsOfLink) {
                 try {
-                    String response = restTemplate.getForObject(link + from + "/" + to + endPart, String.class);
+                    String response = restTemplate.getForObject(link + from.toLowerCase() + "/" + to.toLowerCase() + endPart, String.class);
                     if (response != null) {
                         rate = exchangeRateExtractor(response,to);
                         logger.info("Exchange rate from " + from + " to " + to + " is "+ rate);

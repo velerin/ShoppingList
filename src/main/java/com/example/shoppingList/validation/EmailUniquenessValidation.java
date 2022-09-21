@@ -15,7 +15,6 @@ public class EmailUniquenessValidation implements ConstraintValidator<UniqueEmai
         if (email == null) {
             return true;
         }
-
         return !userService.checkIfUserExist(email);
     }
 }

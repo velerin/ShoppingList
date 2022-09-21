@@ -101,7 +101,7 @@
 
                 <td class="table-success">
                     <!-- Add "add" button/link -->
-                    <a th:href="@{/products/showFormForAdd/{listId}(listId=${temp.id})}" class="btn btn-warning btn-sm">Add Product</a>
+                    <a th:href="@{/products/{userId}/{listId}/showFormForAdd(userId=${userId},listId=${temp.id})}" class="btn btn-warning btn-sm">Add Product</a>
 
                 </td>
                 <td class="table-success" />
