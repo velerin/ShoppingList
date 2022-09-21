@@ -4,6 +4,7 @@ import com.example.shoppingList.constants.ProductListFieldsForView;
 import com.example.shoppingList.constants.ProductsFieldsForView;
 import com.example.shoppingList.dao.ProductListRepository;
 import com.example.shoppingList.dao.ProductRepository;
+import com.example.shoppingList.entity.Product;
 import com.example.shoppingList.entity.ProductList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,7 +12,9 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Controller
@@ -55,17 +58,17 @@ public class ProductController {
                 case 4:
                     return s1.getCurrency().compareTo(s2.getCurrency());
                 case 5:
-                    return Double.compare(s1.getAmount()*s1.getPricePerPiece(),s2.getAmount()*s2.getPricePerPiece());
+                    return Double.compare(s1.getAmount() * s1.getPricePerPiece(), s2.getAmount() * s2.getPricePerPiece());
                 default:
                     return s1.getProductName().compareTo(s2.getProductName());
             }
         }));
 
         model.addAttribute("userId", userId);
+        model.addAttribute("sumsMap", convertFromProductListToMap(list));
         model.addAttribute("productLists", list);
         model.addAttribute("productListNames", ProductListFieldsForView.all());
         model.addAttribute("productNames", ProductsFieldsForView.all());
-
 
         return "products/products-list";
     }
@@ -94,9 +97,9 @@ public class ProductController {
     }
 
     @PostMapping("{userId}/save")
-    public String save( @PathVariable final Integer userId,
-                        @ModelAttribute("list") ProductList list,
-                        BindingResult bindingResult) {
+    public String save(@PathVariable final Integer userId,
+                       @ModelAttribute("list") ProductList list,
+                       BindingResult bindingResult) {
 
         productListRepository.save(list);
 
@@ -108,5 +111,24 @@ public class ProductController {
                              @RequestParam("listId") final Integer listId) {
         productListRepository.deleteById(listId);
         return "redirect:/shoppinglists/showProductLists/" + userId;
+    }
+
+    private Map<Integer,Double> convertFromProductListToMap(List<ProductList> productLists){
+        Map<Integer,Double> sumsMap= new HashMap<>();
+        for(ProductList productList:productLists){
+            sumsMap.put(productList.getId(),0.0);
+        }
+
+        for(ProductList productList:productLists){
+            for(Product product:productList.getProducts()){
+                if(product.getProductList().getId() == productList.getId()){
+                    int key = productList.getId();
+                    double value = sumsMap.get(key);
+                    value+=product.getPricePerPiece()*product.getAmount();
+                    sumsMap.put(key,value);
+                }
+            }
+        }
+        return sumsMap;
     }
 }

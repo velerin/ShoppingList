@@ -124,6 +124,19 @@
                     </a>
                 </td>
             </tr>
+            <tr>
+                <td>Total</td>
+                <td/>
+                <td/>
+                <block th:each="sum:${sumsMap}" >
+                    <td th:if="${temp.id==sum.key}" th:text="${#numbers.formatDecimal(sum.value, 1, 'COMMA', 2, 'POINT')}"/>
+                </block>
+                <td/>
+                <td/>
+                <td/>
+                <td/>
+            </tr>
+
         </tbody>
 
     </table>

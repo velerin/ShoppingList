@@ -33,6 +33,10 @@ public class CheckUserAspect {
     @Around("com.example.shoppingList.controller.aspect.AopExpressions.forControllerPackageWithoutHomeAndLoginAndRegistrationAndUserControllers()")
     public Object aroundControllerFunction(ProceedingJoinPoint joinPoint) throws Throwable {
         Object result = joinPoint.proceed();
+        if(authorities==null){
+            logger.info("Login error. Authorities not initialized.");
+            return "redirect:/showMyLoginPage";
+        }
 
         if (!(authorities.contains(new Authority(userName, Authorities.ADMIN.value))||authorities.contains(new Authority(userName,Authorities.MANAGER.value)))) {
 
@@ -40,16 +44,12 @@ public class CheckUserAspect {
 
             if (joinPoint.getArgs()[0] instanceof Integer) {
                 userId = ((Integer) joinPoint.getArgs()[0]);
-                logger.info("This.userId " + this.userId + ", retrieved userId " + userId);
                 if (this.userId != userId) {
                     result = "redirect:/access-denied";
                 }
             } else {
-                logger.info("joinPoint.getArgs()[0] is not Integer");
                 result = "redirect:/access-denied";
             }
-
-            logger.info("Around from function |" + joinPoint.getSignature().getName() + "| with result |" + result + "|");
         }
         return result;
     }
@@ -69,14 +69,10 @@ public class CheckUserAspect {
             if (user != null) {
                 this.userId = user.getId();
                 this.userName = user.getUserName();
-                logger.info("This.userId " + userId);
-                logger.info("This.userName " + userName);
             } else {
                 result = "redirect:/showMyLoginPage";
             }
         }
-
-        logger.info("AfterReturning from method |" + joinPoint.getSignature().getName() + "| with |" + result + "|");
 
         return result;
     }
