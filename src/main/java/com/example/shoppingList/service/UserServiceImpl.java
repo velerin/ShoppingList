@@ -105,7 +105,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<User> findByFirstName(String firstName) {
-        return userRepository.findAllByFirstName(firstName);
+        return userRepository.findAllByFirstNameContainingIgnoreCase(firstName);
     }
 
 

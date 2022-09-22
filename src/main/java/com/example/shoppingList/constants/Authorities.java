@@ -12,4 +12,8 @@ public enum Authorities {
     Authorities(String roleUser) {
         this.value = roleUser;
     }
+
+    public String getShortName(){
+        return value.substring(value.indexOf("_")+1);
+    }
 }

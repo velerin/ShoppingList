@@ -61,6 +61,6 @@ public class RegistrationController {
         if(Objects.equals(from, "user")){
             return "redirect:/users/showUsers";
         }
-        return "redirect:/showMyLoginPage";
+        return "registration-confirmation";
     }
 }

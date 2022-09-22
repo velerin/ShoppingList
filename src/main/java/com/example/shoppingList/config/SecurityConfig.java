@@ -1,5 +1,6 @@
 package com.example.shoppingList.config;
 
+import com.example.shoppingList.constants.Authorities;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Configuration;
@@ -30,11 +31,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .antMatchers("/register/*RegistrationForm").permitAll()
-                .antMatchers("/users/showForm*").hasAnyRole("MANAGER", "ADMIN")
-                .antMatchers("/users/save*").hasAnyRole("MANAGER", "ADMIN")
-                .antMatchers("/*/delete").hasRole("ADMIN")
-                .antMatchers("/{shoppinglists|products}/**").hasRole("USER")
-                .antMatchers("/{users|shoppinglists|products}/**").hasAnyRole("MANAGER", "ADMIN")
+                .antMatchers("/products/*/**").hasRole(Authorities.USER.getShortName())
+                .antMatchers("/shoppinglists/*/**").hasRole(Authorities.USER.getShortName())
+                .antMatchers("/users/show*").hasAnyRole(Authorities.ADMIN.getShortName(), Authorities.MANAGER.getShortName())
+                .antMatchers("/users/save*").hasAnyRole(Authorities.ADMIN.getShortName(), Authorities.MANAGER.getShortName())
+                .antMatchers("/{users|shoppinglists|products}/**").hasRole(Authorities.ADMIN.getShortName())
+                .antMatchers("/{users|shoppinglists|products}/*/{show*|save}").hasRole(Authorities.MANAGER.getShortName())
                 .antMatchers("/resources/**").permitAll()
                 .antMatchers("/").authenticated()
                 .and()

@@ -64,7 +64,9 @@ public class CheckUserAspect {
         if (args.length > 0 && args[0] instanceof HttpSession) {
             session = (HttpSession) args[0];
             User user = (User) session.getAttribute("user");
-            this.authorities = authorityRepository.findAllAuthoritiesByUser(user);
+            if(authorities==null){
+                this.authorities = authorityRepository.findAllAuthoritiesByUser(user);
+            }
 
             if (user != null) {
                 this.userId = user.getId();
