@@ -2,7 +2,7 @@ package com.example.shoppingList.config;
 
 import com.example.shoppingList.dao.AuthorityRepository;
 import com.example.shoppingList.entity.User;
-import com.example.shoppingList.service.UserService;
+import com.example.shoppingList.validation.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;

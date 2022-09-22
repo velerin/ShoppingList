@@ -1,4 +1,4 @@
-package com.example.shoppingList.service;
+package com.example.shoppingList.validation.service;
 
 import com.example.shoppingList.entity.User;
 import com.example.shoppingList.model.UserModel;

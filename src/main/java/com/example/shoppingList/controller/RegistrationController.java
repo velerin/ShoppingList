@@ -2,7 +2,7 @@ package com.example.shoppingList.controller;
 
 import com.example.shoppingList.entity.User;
 import com.example.shoppingList.model.UserModel;
-import com.example.shoppingList.service.UserService;
+import com.example.shoppingList.validation.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.stereotype.Controller;

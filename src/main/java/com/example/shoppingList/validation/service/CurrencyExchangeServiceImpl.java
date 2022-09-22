@@ -1,4 +1,4 @@
-package com.example.shoppingList.service;
+package com.example.shoppingList.validation.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

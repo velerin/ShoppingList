@@ -1,6 +1,6 @@
 package com.example.shoppingList.validation;
 
-import com.example.shoppingList.service.UserService;
+import com.example.shoppingList.validation.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.validation.ConstraintValidator;

@@ -7,7 +7,7 @@ import com.example.shoppingList.dao.ProductRepository;
 import com.example.shoppingList.entity.Product;
 import com.example.shoppingList.entity.ProductList;
 import com.example.shoppingList.entity.User;
-import com.example.shoppingList.service.UserService;
+import com.example.shoppingList.validation.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

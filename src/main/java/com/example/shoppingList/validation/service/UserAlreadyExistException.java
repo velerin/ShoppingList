@@ -1,4 +1,4 @@
-package com.example.shoppingList.service;
+package com.example.shoppingList.validation.service;
 
 public class UserAlreadyExistException extends RuntimeException{
 
