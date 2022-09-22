@@ -48,6 +48,8 @@ public class ProductController {
                        @Valid @ModelAttribute("product") Product product,
                        BindingResult bindingResult){
 
+        System.out.println("bindingResult: "+bindingResult);
+
         if (bindingResult.hasErrors()){
             return "products/product-form";
         }
@@ -57,12 +59,12 @@ public class ProductController {
             product.setProductList(productList);
             productRepository.save(product);
         } else {
-            Product productFromRepo = productRepository.getReferenceById(product.getId());
-            productFromRepo.setAmount(product.getAmount());
-            productFromRepo.setProductName(product.getProductName());
-            productFromRepo.setCurrency(product.getCurrency());
-            productFromRepo.setPricePerPiece(product.getPricePerPiece());
-            productRepository.save(product);
+            Product productFromRepository = productRepository.getReferenceById(product.getId());
+            productFromRepository.setAmount(product.getAmount());
+            productFromRepository.setProductName(product.getProductName());
+            productFromRepository.setCurrency(product.getCurrency());
+            productFromRepository.setPricePerPiece(product.getPricePerPiece());
+            productRepository.save(productFromRepository);
         }
 
 

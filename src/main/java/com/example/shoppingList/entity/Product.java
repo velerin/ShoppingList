@@ -3,9 +3,7 @@ package com.example.shoppingList.entity;
 import com.example.shoppingList.validation.CurrencyValid;
 
 import javax.persistence.*;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 
 @Entity
 @Table(name = "products")
@@ -16,22 +14,24 @@ public class Product {
     @Column(name = "id")
     private int id;
 
-    @NotNull
-    @Min(value=0, message = "is negative")
+    @NotNull(message = "is required")
+    @DecimalMin(value = "0.0",inclusive = false,message = "is negative")
+    @Digits(integer=10, fraction=3,message = "have more than two fractional digits")
     @Column(name = "amount", nullable = false)
-    private int amount = -1;
+    private Double amount = 1.00;
 
-    @NotNull
+    @NotNull(message = "is required")
     @Size(min=1, message = "is required")
     @Column(name = "product_name", nullable = false)
-    private String productName = "Default product for new user";
+    private String productName = "Default product";
 
-    @NotNull
-    @Min(value=0, message = "is negative")
+    @NotNull(message = "is required")
+    @DecimalMin(value = "0.0",inclusive = false,message = "is negative")
+    @Digits(integer=10, fraction=2,message = "have more than two fractional digits")
     @Column(name = "price_per_piece", nullable = false)
-    private double pricePerPiece = -1.00;
+    private Double pricePerPiece = 1.00;
 
-    @NotNull
+    @NotNull(message = "is required")
     @CurrencyValid
     @Column(name = "currency", nullable = false)
     private String currency = "PLN";
@@ -47,7 +47,7 @@ public class Product {
     public Product() {
     }
 
-    public Product(int amount, String productName, double pricePerPiece, String currency) {
+    public Product(Double amount, String productName, Double pricePerPiece, String currency) {
         this.amount = amount;
         this.productName = productName;
         this.pricePerPiece = pricePerPiece;
@@ -62,11 +62,11 @@ public class Product {
         this.id = id;
     }
 
-    public int getAmount() {
+    public Double getAmount() {
         return amount;
     }
 
-    public void setAmount(int amount) {
+    public void setAmount(Double amount) {
         this.amount = amount;
     }
 
@@ -78,11 +78,11 @@ public class Product {
         this.productName = productName;
     }
 
-    public double getPricePerPiece() {
+    public Double getPricePerPiece() {
         return pricePerPiece;
     }
 
-    public void setPricePerPiece(double pricePerPiece) {
+    public void setPricePerPiece(Double pricePerPiece) {
         this.pricePerPiece = pricePerPiece;
     }
 

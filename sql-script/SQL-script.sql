@@ -49,7 +49,7 @@ VALUES
 
 CREATE TABLE products (
   id INT AUTO_INCREMENT NOT NULL,
-   amount INT NOT NULL,
+   amount DOUBLE NOT NULL,
    product_name VARCHAR(255) NOT NULL,
    price_per_piece DOUBLE NOT NULL,
    currency VARCHAR(255) NOT NULL,

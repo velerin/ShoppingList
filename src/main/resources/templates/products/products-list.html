@@ -118,7 +118,7 @@
 
                 <td>
                     <!-- Add "update" button/link -->
-                    <a th:href="@{/products/{userId}/showFormForUpdate(userId=${userId},productId=${product.id})}" class="btn btn-info btn-sm">Update</a>
+                    <a th:href="@{/products/{userId}/{listId}/showFormForAdd(userId=${userId},listId=${temp.id},productId=${product.id})}" class="btn btn-info btn-sm">Update</a>
                 </td>
 
                 <td>

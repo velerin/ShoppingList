@@ -39,8 +39,8 @@ public class RegistrationController {
     @PostMapping("/processRegistrationForm")
     public String processRegistrationForm(
             @Valid @ModelAttribute("userModel") UserModel userModel,
-            @ModelAttribute ("from") String from,
             BindingResult bindingResult,
+            @ModelAttribute ("from") String from,
             Model model) {
 
         if (bindingResult.hasErrors()){
@@ -57,7 +57,6 @@ public class RegistrationController {
             return "registration-form";
         }
 
-        // create user account
         userService.register(userModel);
         if(Objects.equals(from, "user")){
             return "redirect:/users/showUsers";

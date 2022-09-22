@@ -174,7 +174,7 @@ public class CurrencyValidator implements ConstraintValidator<CurrencyValid,Stri
     public boolean isValid(String currency, ConstraintValidatorContext context) {
 
         if (currency == null) {
-            return false;
+            return true;
         }
 
         return currencies.contains(currency);

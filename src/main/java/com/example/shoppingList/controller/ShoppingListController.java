@@ -53,7 +53,7 @@ public class ShoppingListController {
         list.forEach(s -> s.getProducts().sort((s1, s2) -> {
             switch (finalSort) {
                 case 2:
-                    return Integer.compare(s1.getAmount(), s2.getAmount());
+                    return  Double.compare(s1.getAmount(), s2.getAmount());
                 case 3:
                     return Double.compare(s1.getPricePerPiece(), s2.getPricePerPiece());
                 case 4:

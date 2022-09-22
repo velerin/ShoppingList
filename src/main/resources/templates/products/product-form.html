@@ -28,80 +28,87 @@
 
   <div style="padding-top: 30px" class="panel-body">
 
-      <form action="#" th:action="@{/users/save}"
-                       th:object="${user}" method="POST">
+      <form action="#" th:action="@{/products/{userId}/{listId}/save(userId=${userId},listId=${listId})}"
+                       th:object="${product}" method="POST">
 
         <!--Add hidden form field for update-->
         <input type="hidden" th:field="*{id}"/>
 
-            <!--User name -->
-            <div class="row g-3 align-items-center">
-              <div class="col-auto">
-                <label for="disabledInput" class="col-form-label">Username: </label>
-              </div>
-              <div class="col-auto">
-                <input th:field="*{userName}" class="form-control" id="disabledInput" type="text" placeholder="Disabled input here..." disabled>
-              </div>
-              <div class="col-auto">
-                <span id="passwordHelpInline" class="form-text">
-                </span>
-              </div>
+
+        <!--productName -->
+        <div class="row g-2 col-3 align-items-center">
+          <div class="form-group row ">
+            <label for="inputPassword10" class="col-sm-4 col-form-label">Product Name:</label>
+            <div class="col-sm-7">
+              <input th:field="*{productName}" type="text" id="productName" class="form-control" placeholder="Product Name (*)" aria-describedby="Disabled input example">
             </div>
-
-            <br>
-
-            <!--First name -->
-            <div class="row g-3 align-items-center">
-              <div class="col-auto">
-                <label for="inputPassword7" class="col-form-label">First Name:</label>
-              </div>
-              <div class="col-auto">
-                <input th:field="*{firstName}" type="text" id="inputPassword7" class="form-control" aria-describedby="passwordHelpInline">
-              </div>
-              <div class="col-auto">
-                <span id="passwordHelpInline2" class="form-text">
-                </span>
-              </div>
+          </div>
+          <div class="col-auto">
+            <div th:if="${#fields.hasErrors('productName')}"
+                 style="margin-bottom: 25px" class="text-danger">
+              <ul>
+                <li th:each="err : ${#fields.errors('productName')}" th:text="'Product Name ' + ${err}" />
+              </ul>
             </div>
-
-            <br>
-
-            <!--Last name -->
-            <div class="row g-3 align-items-center">
-              <div class="col-auto">
-                <label for="inputPassword8" class="col-form-label">Last Name:</label>
-              </div>
-              <div class="col-auto">
-                <input th:field="*{lastName}" type="text" id="inputPassword8" class="form-control" aria-describedby="passwordHelpInline">
-              </div>
-              <div class="col-auto">
-                <span id="passwordHelpInline3" class="form-text">
-                </span>
-              </div>
-            </div>
-
-            <br>
-
-            <!--Email -->
-            <div class="row g-3 align-items-center">
-              <div class="col-auto">
-                <label for="inputPassword9" class="col-form-label">Email:    </label>
-              </div>
-              <div class="col-auto">
-                <input th:field="*{email}" type="text" id="inputPassword9" class="form-control" placeholder="Disabled input" aria-describedby="Disabled input example">
-              </div>
-              <div class="col-auto">
-                <span id="passwordHelpInline4" class="form-text">
-                </span>
-              </div>
-            </div>
+          </div>
+        </div>
 
         <br>
 
-        <div class="form-check form-check-inline">
-          <input th:checked="*{enabled}" th:field="*{enabled}"
-                 class="form-check-input" type="checkbox" id="inlineCheckbox" value="option1">
-          <label class="form-check-label" for="inlineCheckbox">User Enabled</label>
+        <!--amount -->
+        <div class="row g-2 col-3 align-items-center">
+          <div class="form-group row">
+            <label for="inputPassword10" class="col-sm-4 col-form-label">Amount:</label>
+            <div class="col-sm-7">
+              <input th:field="*{amount}" type="text" id="amount" class="form-control" placeholder="Amount (*)" aria-describedby="Disabled input example">
+            </div>
+          </div>
+          <div class="col-auto">
+            <div th:if="${#fields.hasErrors('amount')}"
+                 style="margin-bottom: 25px" class="text-danger">
+              <ul>
+                <li th:each="err : ${#fields.errors('amount')}" th:text="'Amount ' + ${err}" />
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <br>
+
+        <!--pricePerPiece -->
+        <div class="row g-2 col-3 align-items-center">
+          <div class="form-group row">
+            <label for="inputPassword10" class="col-sm-4 col-form-label">Price Per Piece:</label>
+            <div class="col-sm-7">
+              <input th:field="*{pricePerPiece}" type="text" id="inputPassword9" class="form-control" placeholder="Price Per Piece (*)" aria-describedby="Disabled input example">
+            </div>
+          </div>
+          <div class="col-auto">
+            <div th:if="${#fields.hasErrors('pricePerPiece')}"
+                 style="margin-bottom: 25px" class="text-danger">
+              <ul>
+                <li th:each="err : ${#fields.errors('pricePerPiece')}" th:text="'Price Per Piece ' + ${err}" />
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!--currency -->
+        <div class="row g-2 col-3 align-items-center">
+          <div class="form-group row">
+            <label for="inputPassword10" class="col-sm-4 col-form-label">Currency:</label>
+            <div class="col-sm-7">
+              <input th:field="*{currency}" type="text" id="inputPassword10" class="form-control" placeholder="Currency (*)" aria-describedby="Disabled input example">
+            </div>
+          </div>
+          <div class="col-auto">
+            <div th:if="${#fields.hasErrors('currency')}"
+                 style="margin-bottom: 25px" class="text-danger">
+              <ul>
+                <li th:each="err : ${#fields.errors('currency')}" th:text="'Currency ' + ${err}" />
+              </ul>
+            </div>
+          </div>
         </div>
 
         <br><br>
@@ -110,7 +117,7 @@
       </form>
       <br>
 
-    <a th:href="@{/users/showUsers}" class="btn btn-info col-2" type="button" aria-pressed="true">Back to User List</a>
+    <a th:href="@{/shoppinglists/{userId}/showProductLists(userId=${userId})}" class="btn btn-info col-2" type="button" aria-pressed="true">Back to Product List</a>
 
     </div>
 
