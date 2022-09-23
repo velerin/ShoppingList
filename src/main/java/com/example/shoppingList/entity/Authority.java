@@ -1,11 +1,19 @@
 package com.example.shoppingList.entity;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.springframework.security.core.GrantedAuthority;
+
 import javax.persistence.*;
 import java.util.Objects;
 
+@Getter
+@Setter
+@NoArgsConstructor
 @Entity
 @Table(name = "authorities")
-public class Authority {
+public class Authority implements GrantedAuthority {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,62 +33,10 @@ public class Authority {
                           CascadeType.REFRESH})
     private User user;
 
-    public Authority() {
-    }
-
-    public Authority(String authority) {
-        this.authority = authority;
-    }
 
     public Authority(String userName, String authority) {
         this.userName = userName;
         this.authority = authority;
-    }
-
-    public Authority(String authority, String userName, User user) {
-        this.authority = authority;
-        this.userName = userName;
-        this.user = user;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getAuthority() {
-        return authority;
-    }
-
-    public void setAuthority(String authority) {
-        this.authority = authority;
-    }
-
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    @Override
-    public String toString() {
-        return "Authority{" +
-                "authority='" + authority + '\'' +
-                ", userName='" + userName + '\'' +
-                '}';
     }
 
     @Override
@@ -96,4 +52,9 @@ public class Authority {
         return Objects.hash(authority, userName);
     }
 
+    @Override
+    public String toString() {
+        String cutString = authority.substring(authority.indexOf("_")+1);
+        return cutString.charAt(0)+cutString.substring(1).toLowerCase();
+    }
 }

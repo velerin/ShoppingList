@@ -1,12 +1,13 @@
-package com.example.shoppingList.validation.service;
+package com.example.shoppingList.service;
 
 import com.example.shoppingList.entity.User;
 import com.example.shoppingList.model.UserModel;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.core.userdetails.UserDetailsService;
 
 import java.util.List;
 
-public interface UserService {
+public interface UserService extends UserDetailsService {
 
     void register(UserModel userModel);
 

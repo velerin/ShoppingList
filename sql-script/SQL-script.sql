@@ -10,19 +10,21 @@ CREATE TABLE users (
    email VARCHAR(255) NOT NULL,
    username VARCHAR(255) NOT NULL,
    password VARCHAR(255) NOT NULL,
-   enabled BIT(1) NOT NULL,
+   enabled boolean NOT NULL,
+   `locked` boolean NOT NULL,
    CONSTRAINT pk_users PRIMARY KEY (id)
 );
+
 
 ALTER TABLE users ADD CONSTRAINT uc_users_email UNIQUE (email);
 
 ALTER TABLE users ADD CONSTRAINT uc_users_username UNIQUE (username);
 
-INSERT INTO `users` (username, password, first_name, last_name, email, enabled)
+INSERT INTO `users` (username, password, first_name, last_name, email, enabled,locked)
 VALUES
-('john','$2a$12$TCQZHxH4oWniBX1nDDYere9UszxzrvBkyeQSnIYE158jQuQ7X2uUO','John','Doe','john@gmail.com',1),
-('mary','$2a$12$TCQZHxH4oWniBX1nDDYere9UszxzrvBkyeQSnIYE158jQuQ7X2uUO','Mary','Public','mary@gmail.com',1),
-('susan','$2a$12$TCQZHxH4oWniBX1nDDYere9UszxzrvBkyeQSnIYE158jQuQ7X2uUO','Susan','Adams','susan@gmail.com',1);
+('john','$2a$12$TCQZHxH4oWniBX1nDDYere9UszxzrvBkyeQSnIYE158jQuQ7X2uUO','John','Doe','john@gmail.com',1,0),
+('mary','$2a$12$TCQZHxH4oWniBX1nDDYere9UszxzrvBkyeQSnIYE158jQuQ7X2uUO','Mary','Public','mary@gmail.com',1,0),
+('susan','$2a$12$TCQZHxH4oWniBX1nDDYere9UszxzrvBkyeQSnIYE158jQuQ7X2uUO','Susan','Adams','susan@gmail.com',1,0);
 
 CREATE TABLE authorities (
   id INT AUTO_INCREMENT NOT NULL,

@@ -1,4 +1,4 @@
-package com.example.shoppingList.validation.service;
+package com.example.shoppingList.service;
 
 public interface CurrencyExchangeService {
 

@@ -70,7 +70,7 @@ public class CheckUserAspect {
 
             if (user != null) {
                 this.userId = user.getId();
-                this.userName = user.getUserName();
+                this.userName = user.getUsername();
             } else {
                 result = "redirect:/showMyLoginPage";
             }

@@ -1,11 +1,18 @@
 package com.example.shoppingList.entity;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.LinkedList;
 import java.util.List;
 
+@Getter
+@Setter
+@NoArgsConstructor
 @Entity
 @Table(name = "lists")
 public class ProductList {
@@ -31,44 +38,6 @@ public class ProductList {
                           CascadeType.REFRESH})
     private User user;
 
-    public ProductList() {
-    }
-
-    public ProductList(String title) {
-        this.title = title;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public List<Product> getProducts() {
-        return products;
-    }
-
-    public void setProducts(List<Product> products) {
-        this.products = products;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
 
     public void addProduct(Product product) {
         if (this.products == null) {
@@ -79,11 +48,4 @@ public class ProductList {
         product.setProductList(this);
     }
 
-    @Override
-    public String toString() {
-        return "ProductList{" +
-                "title='" + title + '\'' +
-                ", products=" + products +
-                '}';
-    }
 }

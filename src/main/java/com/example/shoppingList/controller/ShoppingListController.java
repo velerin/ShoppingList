@@ -7,8 +7,9 @@ import com.example.shoppingList.dao.ProductRepository;
 import com.example.shoppingList.entity.Product;
 import com.example.shoppingList.entity.ProductList;
 import com.example.shoppingList.entity.User;
-import com.example.shoppingList.validation.service.UserService;
+import com.example.shoppingList.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -30,6 +31,7 @@ public class ShoppingListController {
     private ProductRepository productRepository;
 
     @Autowired
+    @Qualifier("user2ServiceImpl") 
     private UserService userService;
 
     @GetMapping(value = {"/{userId}/showProductLists", "/{userId}/showProductLists/{listId}"})

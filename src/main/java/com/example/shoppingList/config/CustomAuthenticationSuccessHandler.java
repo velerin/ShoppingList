@@ -2,8 +2,9 @@ package com.example.shoppingList.config;
 
 import com.example.shoppingList.dao.AuthorityRepository;
 import com.example.shoppingList.entity.User;
-import com.example.shoppingList.validation.service.UserService;
+import com.example.shoppingList.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
@@ -19,6 +20,7 @@ import java.io.IOException;
 public class CustomAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
 
     @Autowired
+	@Qualifier("user2ServiceImpl")
     private UserService userService;
 
 	@Autowired

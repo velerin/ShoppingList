@@ -27,4 +27,6 @@ public class Beans {
                                                  "messages/user/messages");
         return resourceBundleMessageSource;
     }
+
+
 }

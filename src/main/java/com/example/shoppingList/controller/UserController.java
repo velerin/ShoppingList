@@ -3,20 +3,24 @@ package com.example.shoppingList.controller;
 import com.example.shoppingList.constants.UserFieldsForView;
 import com.example.shoppingList.entity.User;
 import com.example.shoppingList.model.UserModel;
-import com.example.shoppingList.validation.service.UserService;
+import com.example.shoppingList.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.logging.Logger;
 
 @Controller
 @RequestMapping("/users")
 public class UserController {
 
+    private final Logger logger =  Logger.getLogger(getClass().getName());
     @Autowired
+    @Qualifier("user2ServiceImpl") 
     private UserService userService;
 
     @GetMapping("/showUsers")
@@ -67,7 +71,15 @@ public class UserController {
 
     @PostMapping("/save")
     public String save(@ModelAttribute("user") User user) {
-        userService.save(user);
+        User userFromRepo = userService.findById(user.getId());
+
+        userFromRepo.setFirstName(user.getFirstName());
+        userFromRepo.setLastName(user.getLastName());
+        userFromRepo.setEmail(user.getEmail());
+        userFromRepo.setEnabled(user.isEnabled());
+
+        logger.info(userFromRepo.toString());
+        userService.save(userFromRepo);
         return "redirect:/users/showUsers";
     }
 
