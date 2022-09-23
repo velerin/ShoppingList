@@ -45,7 +45,14 @@
 					Show your Product Lists</a>
 			</p>
 		</div>
+	<br>
+	<a th:href="@{/users/showFormForUpdate(userId=${session.user.id})}"
+	   class="btn btn-info btn-sm">
+		Update your profile
+	</a>
 
+	<br>
+	<br>
 		<div sec:authorize="hasAnyRole('ROLE_MANAGER','ROLE_ADMIN')">
 
 			<p>

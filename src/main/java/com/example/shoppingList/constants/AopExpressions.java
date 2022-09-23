@@ -1,4 +1,4 @@
-package com.example.shoppingList.controller.aspect;
+package com.example.shoppingList.constants;
 
 import org.aspectj.lang.annotation.Pointcut;
 
@@ -26,7 +26,14 @@ public class AopExpressions {
     @Pointcut("execution(* com.example.shoppingList.controller.HomeController.home (..))")
     public void forHomePage(){}
 
-    @Pointcut("forControllerPackage() && !(forHomeController() || forLoginController() || forRegistrationController()|| forUserController())")
+    @Pointcut("execution(* com.example.shoppingList.controller.HomeController.showFormForUpdate (..))")
+    public void forShowFormForUpdate(){}
+
+    @Pointcut("execution(* com.example.shoppingList.controller.HomeController.save (..))")
+    public void forSave(){}
+
+    @Pointcut("(forSave() || forShowFormForUpdate() || forControllerPackage() ) &&" +
+            " !(forHomeController() || forLoginController() || forRegistrationController())")
     public void forControllerPackageWithoutHomeAndLoginAndRegistrationAndUserControllers() {
     }
 }

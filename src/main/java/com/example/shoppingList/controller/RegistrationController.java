@@ -4,7 +4,6 @@ import com.example.shoppingList.entity.User;
 import com.example.shoppingList.model.UserModel;
 import com.example.shoppingList.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,7 +20,6 @@ import java.util.logging.Logger;
 public class RegistrationController {
 
     @Autowired
-    @Qualifier("user2ServiceImpl") 
     private UserService userService;
 
     private final Logger logger = Logger.getLogger(getClass().getName());

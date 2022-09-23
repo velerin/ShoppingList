@@ -30,15 +30,15 @@ public class CheckUserAspect {
 
     private final Logger logger = Logger.getLogger(getClass().getName());
 
-    @Around("com.example.shoppingList.controller.aspect.AopExpressions.forControllerPackageWithoutHomeAndLoginAndRegistrationAndUserControllers()")
+    @Around("com.example.shoppingList.constants.AopExpressions.forControllerPackageWithoutHomeAndLoginAndRegistrationAndUserControllers()")
     public Object aroundControllerFunction(ProceedingJoinPoint joinPoint) throws Throwable {
         Object result = joinPoint.proceed();
-        if(authorities==null){
+        if (authorities == null) {
             logger.info("Login error. Authorities not initialized.");
             return "redirect:/showMyLoginPage";
         }
 
-        if (!(authorities.contains(new Authority(userName, Authorities.ADMIN.value))||authorities.contains(new Authority(userName,Authorities.MANAGER.value)))) {
+        if (!(authorities.contains(new Authority(userName, Authorities.ADMIN.value)) || authorities.contains(new Authority(userName, Authorities.MANAGER.value)))) {
 
             Integer userId;
 
@@ -47,14 +47,14 @@ public class CheckUserAspect {
                 if (this.userId != userId) {
                     result = "redirect:/access-denied";
                 }
-            } else {
+            }else{
                 result = "redirect:/access-denied";
             }
         }
         return result;
     }
 
-    @Around("com.example.shoppingList.controller.aspect.AopExpressions.forHomePage()")
+    @Around("com.example.shoppingList.constants.AopExpressions.forHomePage()")
     public Object aroundHomePage(ProceedingJoinPoint joinPoint) throws Throwable {
 
         Object result = joinPoint.proceed();
@@ -64,7 +64,7 @@ public class CheckUserAspect {
         if (args.length > 0 && args[0] instanceof HttpSession) {
             session = (HttpSession) args[0];
             User user = (User) session.getAttribute("user");
-            if(authorities==null){
+            if (authorities == null) {
                 this.authorities = authorityRepository.findAllAuthoritiesByUser(user);
             }
 

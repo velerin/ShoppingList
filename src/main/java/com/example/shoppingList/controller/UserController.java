@@ -1,16 +1,18 @@
 package com.example.shoppingList.controller;
 
+import com.example.shoppingList.constants.Authorities;
 import com.example.shoppingList.constants.UserFieldsForView;
+import com.example.shoppingList.entity.Authority;
 import com.example.shoppingList.entity.User;
 import com.example.shoppingList.model.UserModel;
 import com.example.shoppingList.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -18,9 +20,8 @@ import java.util.logging.Logger;
 @RequestMapping("/users")
 public class UserController {
 
-    private final Logger logger =  Logger.getLogger(getClass().getName());
+    private final Logger logger = Logger.getLogger(getClass().getName());
     @Autowired
-    @Qualifier("user2ServiceImpl") 
     private UserService userService;
 
     @GetMapping("/showUsers")
@@ -58,19 +59,21 @@ public class UserController {
     @GetMapping("/showFormForAdd")
     public String showFormForAdd(Model model) {
         model.addAttribute("userModel", new UserModel());
-        model.addAttribute("from","user");
+        model.addAttribute("from", "user");
         return "registration-form";
     }
 
     @GetMapping("/showFormForUpdate")
-    public String showFormForUpdate(@RequestParam("userId") final int id, Model model) {
+    public String showFormForUpdate(@RequestParam("userId") final Integer id, Model model) {
         User user = userService.findById(id);
         model.addAttribute("user", user);
         return "users/user-form";
     }
 
     @PostMapping("/save")
-    public String save(@ModelAttribute("user") User user) {
+    public String save(@RequestParam("userId") Integer id,
+                       @ModelAttribute("user") User user,
+                       HttpSession session) {
         User userFromRepo = userService.findById(user.getId());
 
         userFromRepo.setFirstName(user.getFirstName());
@@ -80,6 +83,12 @@ public class UserController {
 
         logger.info(userFromRepo.toString());
         userService.save(userFromRepo);
+
+        if (!userFromRepo.getAuthorities().contains(new Authority(userFromRepo.getUsername(), Authorities.MANAGER.value)) ||
+                !userFromRepo.getAuthorities().contains(new Authority(userFromRepo.getUsername(), Authorities.ADMIN.value))) {
+            session.setAttribute("user", userFromRepo);
+            return "redirect:/";
+        }
         return "redirect:/users/showUsers";
     }
 
@@ -88,7 +97,5 @@ public class UserController {
         userService.delete(id);
         return "redirect:/users/showUsers";
     }
-
-
 
 }
